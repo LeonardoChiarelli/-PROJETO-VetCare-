@@ -1,6 +1,5 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Especialidade;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Veterinario;
 
 public record ListaVeterinariosDTO(

@@ -2,6 +2,7 @@ package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosVeterinarioDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarVeterinarioDTO;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.VeterinarioDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -28,8 +29,6 @@ public class Veterinario {
     private String telefone;
     private boolean ativo;
 
-    @Enumerated(EnumType.STRING)
-    private Especialidade especialidade;
     private LocalDateTime agenda;
 
     public Veterinario(CadastrarVeterinarioDTO dto){
@@ -39,7 +38,6 @@ public class Veterinario {
         this.crm = dto.crm();
         this.email = dto.email();
         this.telefone = dto.telefone();
-        this.especialidade = dto.especialidade();
     }
 
     public void agendarConsulta(Pet pet, LocalDateTime horario){}
@@ -52,5 +50,10 @@ public class Veterinario {
 
     public void desativar() {
         this.ativo = false;
+    }
+
+    public void atualizarInfoPet(VeterinarioDTO dto) {
+        if (dto.nome() != null) { this.nome = dto.nome(); }
+        if (dto.email() != null) { this.email = dto.email(); }
     }
 }

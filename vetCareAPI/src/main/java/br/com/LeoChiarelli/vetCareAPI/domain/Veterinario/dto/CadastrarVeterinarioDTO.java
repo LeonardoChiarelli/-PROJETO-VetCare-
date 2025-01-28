@@ -1,6 +1,5 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Especialidade;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -22,9 +21,6 @@ public record CadastrarVeterinarioDTO(
 
         @NotBlank
         @Pattern(regexp = "\\d{9,13}")
-        String telefone,
-
-        @NotNull
-        Especialidade especialidade
+        String telefone
 ) {
 }
