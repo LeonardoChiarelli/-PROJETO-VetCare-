@@ -1,6 +1,12 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
 
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators.Antecedencia;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators.HorarioFuncionamento;
 import jakarta.persistence.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -33,7 +39,22 @@ public class Consulta {
     private Status status;
     private String detalhes;
 
+    public Consulta(Long id, Pet pet, Veterinario veterinario, @NotNull @Future LocalDateTime dataHora, String detalhes) {
+        this.id = id;
+        this.pet = pet;
+        this.veterinario = veterinario;
+        this.dataHora = dataHora;
+        this.detalhes = detalhes;
+    }
+
     public void marcarConsulta(){}
     public void cancelarConsulta(){}
     public void alterarHorario(){}
+
+    public void mudarHorario(@Valid AtualizarConsultaDTO dto) {
+        Antecedencia.validarTempo(dto);
+        HorarioFuncionamento.validarTempo(dto);
+
+        this.dataHora = dto.dataHora();
+    }
 }
