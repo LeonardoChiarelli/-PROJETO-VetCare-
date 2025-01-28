@@ -23,7 +23,7 @@ VetCare+ é uma aplicação para gestão de consultórios veterinários e servi�
 ### Backend
 - **Linguagem:** Java
 - **Framework:** Spring Boot
-- **Banco de Dados:** PostgreSQL
+- **Banco de Dados:** MySQL
 - **ORM:** Hibernate
 
 ### Frontend
@@ -42,7 +42,7 @@ VetCare+ ├── backend │ ├── src │ │ ├── main │ │ │ 
 ### Pré-requisitos
 - Java 17+
 - Node.js 16+
-- PostgreSQL instalado
+- MySQL instalado
 
 ### Backend
 1. Clone o repositório:
@@ -51,18 +51,22 @@ VetCare+ ├── backend │ ├── src │ │ ├── main │ │ │ 
    cd vetcare/backend
 Configure o banco de dados no arquivo application.properties.
 
-Execute o projeto:
-mvn spring-boot:run
+2. Execute o projeto:
+    ```bash
+    mvn spring-boot:run
 
-Frontend
-Navegue para a pasta do frontend:
-cd vetcare/frontend
+### Frontend
+1. Navegue para a pasta do frontend:
+    ```bash
+    cd vetcare/frontend
 
-Instale as dependências:
-npm install
+2. Instale as dependências:
+    ```bash
+    npm install
 
-Inicie o aplicativo:
-npm start
+3. Inicie o aplicativo:
+    ```bash
+    npm start
 
 Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
