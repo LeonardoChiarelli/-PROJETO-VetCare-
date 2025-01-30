@@ -6,6 +6,7 @@ import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.DetalhesPetDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.ListaPetsDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IPetRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.PetService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/vet/pets")
+@RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class PetController {
 
     @Autowired
@@ -26,7 +28,7 @@ public class PetController {
     @Autowired
     private IPetRepository repository;
 
-    @PostMapping
+    @PostMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
     public ResponseEntity<DetalhesPetDTO> cadastrarPet(@RequestBody @Valid CadastrarPetDTO dto, UriComponentsBuilder uriBuilder){
         var pet = service.cadastrar(dto);
@@ -36,7 +38,7 @@ public class PetController {
         return ResponseEntity.created(uri).body(new DetalhesPetDTO(pet));
     }
 
-    @PutMapping
+    @PutMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
     public ResponseEntity<DetalhesPetDTO> atualizarVeterinario(@RequestBody @Valid AtualizarDadosPetDTO dto){
         var pet = service.atualizar(dto);
@@ -44,21 +46,21 @@ public class PetController {
         return ResponseEntity.ok().body(new DetalhesPetDTO(pet));
     }
 
-    @GetMapping
+    @GetMapping("/pets")
     public ResponseEntity<Page<ListaPetsDTO>> listarPets(@PageableDefault(sort = {"nome"}) Pageable pageable){
         var page = repository.findAll(pageable).map(ListaPetsDTO::new);
 
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/pets/{id}")
     public ResponseEntity<DetalhesPetDTO> detalharPet(@PathVariable Long id){
         var pet = repository.getReferenceById(id);
 
         return ResponseEntity.ok(new DetalhesPetDTO(pet));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping({"/admin/pets", "/tutor/pets"})
     @Transactional
     public ResponseEntity deletarPet(@PathVariable Long id){
         repository.deleteById(id);
