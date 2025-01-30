@@ -5,7 +5,7 @@ import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-@Table
+@Table(name = "perfis")
 public class Perfil implements GrantedAuthority {
 
     @Getter
