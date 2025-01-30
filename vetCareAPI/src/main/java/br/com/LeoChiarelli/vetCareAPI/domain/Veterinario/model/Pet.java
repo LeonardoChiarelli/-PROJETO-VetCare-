@@ -1,9 +1,7 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosPetDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarPetDTO;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -43,7 +41,7 @@ public class Pet {
     public void adicionarHistorico(Veterinario veterinario){}
     public void listarHistorico(){}
 
-    public void atualizarVeterinario(@Valid AtualizarDadosPetDTO dto) {
-        if (dto.veterinario() != null) { this.veterinario.atualizarInfoPet(dto.veterinario()); }
+    public void vincular(Veterinario veterinario) {
+        this.veterinario = veterinario;
     }
 }

@@ -6,6 +6,6 @@ public record AtualizarDadosPetDTO(
         @NotNull
         Long id,
 
-        VeterinarioDTO veterinario
+        Long veterinario
 ) {
 }

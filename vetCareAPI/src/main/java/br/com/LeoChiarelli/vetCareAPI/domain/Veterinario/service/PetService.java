@@ -2,9 +2,13 @@ package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosPetDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarPetDTO;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.VincularVeterinarioDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Pet;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Veterinario;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IPetRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IVeterinarioRepository;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +33,11 @@ public class PetService {
         return pet;
     }
 
-    public Pet atualizar(AtualizarDadosPetDTO dto) {
-        var pet = repository.getReferenceById(dto.id());
-        pet.atualizarVeterinario(dto);
-        return pet;
+    public Veterinario atualizar(AtualizarDadosPetDTO dto) {
+        return vetRepository.findById(dto.veterinario()).orElseThrow(() -> new ValidacaoException("Veterinário não encontrado"));
+    }
+
+    public Veterinario vincular(@Valid VincularVeterinarioDTO dto) {
+        return vetRepository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Veterinário não encontrado"));
     }
 }

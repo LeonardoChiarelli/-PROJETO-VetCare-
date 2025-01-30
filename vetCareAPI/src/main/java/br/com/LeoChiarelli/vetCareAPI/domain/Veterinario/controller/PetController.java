@@ -1,9 +1,6 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.controller;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosPetDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarPetDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.DetalhesPetDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.ListaPetsDTO;
+import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.*;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IPetRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.PetService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -30,18 +27,32 @@ public class PetController {
 
     @PostMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
-    public ResponseEntity<DetalhesPetDTO> cadastrarPet(@RequestBody @Valid CadastrarPetDTO dto, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DetalhesPetCadastroDTO> cadastrarPet(@RequestBody @Valid CadastrarPetDTO dto, UriComponentsBuilder uriBuilder){
         var pet = service.cadastrar(dto);
 
         var uri = uriBuilder.path("/api/vet/pets/{id}").buildAndExpand(pet.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(new DetalhesPetDTO(pet));
+        return ResponseEntity.created(uri).body(new DetalhesPetCadastroDTO(pet));
+    }
+
+    @PutMapping("/admin/pets/{id}")
+    @Transactional
+    public ResponseEntity<DetalhesPetDTO> vincularVet(@PathVariable Long id, @RequestBody @Valid VincularVeterinarioDTO dto){
+        var veterinario = service.vincular(dto);
+        var pet = repository.getReferenceById(id);
+
+        pet.vincular(veterinario);
+
+        return ResponseEntity.ok().body(new DetalhesPetDTO(pet));
     }
 
     @PutMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
     public ResponseEntity<DetalhesPetDTO> atualizarVeterinario(@RequestBody @Valid AtualizarDadosPetDTO dto){
-        var pet = service.atualizar(dto);
+        var veterinario = service.atualizar(dto);
+        var pet = repository.getReferenceById(dto.id());
+
+        pet.vincular(veterinario);
 
         return ResponseEntity.ok().body(new DetalhesPetDTO(pet));
     }
@@ -60,9 +71,9 @@ public class PetController {
         return ResponseEntity.ok(new DetalhesPetDTO(pet));
     }
 
-    @DeleteMapping({"/admin/pets", "/tutor/pets"})
+    @DeleteMapping({"/admin/pets/{id}", "/tutor/pets/{id}"})
     @Transactional
-    public ResponseEntity deletarPet(@PathVariable Long id){
+    public ResponseEntity<?> deletarPet(@PathVariable Long id){
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

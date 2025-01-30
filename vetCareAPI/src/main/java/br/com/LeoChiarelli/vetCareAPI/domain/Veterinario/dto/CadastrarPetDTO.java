@@ -1,7 +1,7 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Especie;
-import jakarta.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -20,11 +20,8 @@ public record CadastrarPetDTO(
         String raca,
 
         @NotNull
-        LocalDate dataAniversario,
-
-        @NotNull
-        @Valid
-        VeterinarioDTO veterinario
+        @JsonFormat(pattern = "dd/MM/yyyy")
+        LocalDate dataAniversario
 
         //@NotNull
         //Tutor tutor
