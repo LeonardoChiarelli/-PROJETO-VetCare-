@@ -46,8 +46,16 @@ public class VeterinarioController {
         return ResponseEntity.ok().body(new DetalhesVeterinarioDTO(veterinario));
     }
 
+    @PutMapping("/admin/veterinarios/{id}")
+    @Transactional
+    public ResponseEntity<String> ativar(@PathVariable Long id){
+        service.ativar(id);
+
+        return ResponseEntity.ok().body("Veterinário está ativo");
+    }
+
     @GetMapping("/veterinarios")
-    public ResponseEntity<Page<ListaVeterinariosDTO>> listaVeterinarios(@PageableDefault(sort = {"especialidade"}) Pageable pageable){
+    public ResponseEntity<Page<ListaVeterinariosDTO>> listaVeterinarios(@PageableDefault(sort = {"nome"}) Pageable pageable){
         var page = repository.findAllByAtivoTrue(pageable).map(ListaVeterinariosDTO::new);
 
         return ResponseEntity.ok(page);
@@ -62,7 +70,7 @@ public class VeterinarioController {
 
     @DeleteMapping("/admin/veterinarios/{id}")
     @Transactional
-    public ResponseEntity delete(@PathVariable Long id){
+    public ResponseEntity<?> delete(@PathVariable Long id){
         service.deletar(id);
 
         return ResponseEntity.noContent().build();

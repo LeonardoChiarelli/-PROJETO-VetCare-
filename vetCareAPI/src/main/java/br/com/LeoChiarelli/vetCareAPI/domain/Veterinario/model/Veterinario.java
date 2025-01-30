@@ -2,7 +2,6 @@ package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosVeterinarioDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarVeterinarioDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.VeterinarioDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -13,7 +12,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "medicos")
+@Table(name = "veterinarios")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -29,7 +28,6 @@ public class Veterinario {
     private String telefone;
     private boolean ativo;
 
-    private LocalDateTime agenda;
 
     public Veterinario(CadastrarVeterinarioDTO dto){
         this.ativo = true;
@@ -52,8 +50,7 @@ public class Veterinario {
         this.ativo = false;
     }
 
-    public void atualizarInfoPet(VeterinarioDTO dto) {
-        if (dto.nome() != null) { this.nome = dto.nome(); }
-        if (dto.email() != null) { this.email = dto.email(); }
+    public void ativar(){
+        this.ativo = true;
     }
 }

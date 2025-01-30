@@ -36,4 +36,10 @@ public class VeterinarioService {
 
         veterinario.desativar();
     }
+
+    public void ativar(Long id) {
+        var veterinario = repository.getReferenceById(id);
+
+        veterinario.ativar();
+    }
 }
