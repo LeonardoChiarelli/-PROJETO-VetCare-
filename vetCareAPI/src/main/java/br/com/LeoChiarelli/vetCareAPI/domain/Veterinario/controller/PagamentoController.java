@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/vet/pagamento")
 public class PagamentoController {
 
-    @PostMapping
-    @Transactional
-    public ResponseEntity create(){}
+    //@PostMapping
+    //@Transactional
+    // public ResponseEntity create(){}
 
-    @PutMapping
-    @Transactional
-    public ResponseEntity update(){}
+    //@PutMapping
+    //@Transactional
+    //public ResponseEntity update(){}
 
-    @GetMapping
-    public ResponseEntity read(){}
+    //@GetMapping
+    //public ResponseEntity read(){}
 
-    @DeleteMapping
-    public ResponseEntity delete(){}
+    //@DeleteMapping
+    //public ResponseEntity delete(){}
 }
