@@ -39,11 +39,13 @@ public class Usuario implements UserDetails {
         this.nome = nome;
         this.email = email;
         this.senha = senhaEncriptada;
+        this.perfis.add(new Perfil(4L));
     }
 
     public Boolean isAdmin() { return this.perfis.stream().anyMatch(Perfil::isAdmin); }
     public Boolean isTutor() { return this.perfis.stream().anyMatch(Perfil::isTutor); }
     public Boolean isVet() { return this.perfis.stream().anyMatch(Perfil::isVet); }
+    public Boolean isVisualizador() {return this.perfis.stream().anyMatch(Perfil::isVisualizador); }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
