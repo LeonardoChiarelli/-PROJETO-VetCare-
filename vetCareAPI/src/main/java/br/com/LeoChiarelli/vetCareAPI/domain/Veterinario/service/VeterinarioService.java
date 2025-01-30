@@ -3,7 +3,7 @@ package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosVeterinarioDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarVeterinarioDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Veterinario;
-import br.com.LeoChiarelli.vetCareAPI.general.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IVeterinarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

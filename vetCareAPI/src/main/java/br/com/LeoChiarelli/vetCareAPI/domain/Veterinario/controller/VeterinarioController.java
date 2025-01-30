@@ -6,6 +6,7 @@ import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.DetalhesVeterinario
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.ListaVeterinariosDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IVeterinarioRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.VeterinarioService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api/vet/veterinarios")
+@RequestMapping("/api")
+@SecurityRequirement(name = "bearer-key")
 public class VeterinarioController {
 
     @Autowired
@@ -26,9 +28,9 @@ public class VeterinarioController {
     @Autowired
     private VeterinarioService service;
 
-    @PostMapping
+    @PostMapping("/admin/veterinarios")
     @Transactional
-    public ResponseEntity cadastrarVeterinario(@RequestBody @Valid CadastrarVeterinarioDTO dto, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<DetalhesVeterinarioDTO> cadastrarVeterinario(@RequestBody @Valid CadastrarVeterinarioDTO dto, UriComponentsBuilder uriBuilder){
         var veterinario = service.cadastrar(dto);
 
         var uri = uriBuilder.path("/api/vet/veterinarios/{id}").buildAndExpand(veterinario.getId()).toUri();
@@ -36,29 +38,29 @@ public class VeterinarioController {
         return ResponseEntity.created(uri).body(new DetalhesVeterinarioDTO(veterinario));
     }
 
-    @PutMapping
+    @PutMapping({"/vet/veterinarios", "/admin/veterinarios"})
     @Transactional
-    public ResponseEntity atualizarInfo(@RequestBody @Valid AtualizarDadosVeterinarioDTO dto){
+    public ResponseEntity<DetalhesVeterinarioDTO> atualizarInfo(@RequestBody @Valid AtualizarDadosVeterinarioDTO dto){
         var veterinario = service.atualizar(dto);
 
         return ResponseEntity.ok().body(new DetalhesVeterinarioDTO(veterinario));
     }
 
-    @GetMapping
+    @GetMapping("/veterinarios")
     public ResponseEntity<Page<ListaVeterinariosDTO>> listaVeterinarios(@PageableDefault(sort = {"especialidade"}) Pageable pageable){
         var page = repository.findAllByAtivoTrue(pageable).map(ListaVeterinariosDTO::new);
 
         return ResponseEntity.ok(page);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity detalhar(@PathVariable Long id){
+    @GetMapping("/veterinarios/{id}")
+    public ResponseEntity<DetalhesVeterinarioDTO> detalhar(@PathVariable Long id){
         var veterinario = repository.getReferenceById(id);
 
         return ResponseEntity.ok(new DetalhesVeterinarioDTO(veterinario));
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/admin/veterinarios/{id}")
     @Transactional
     public ResponseEntity delete(@PathVariable Long id){
         service.deletar(id);
