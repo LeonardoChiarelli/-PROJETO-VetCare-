@@ -1,10 +1,12 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators;
+package br.com.LeoChiarelli.vetCareAPI.general.infra.validators;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarConsultaDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IConsultaRepository;
-import br.com.LeoChiarelli.vetCareAPI.general.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class VeterinarioComConsultaNoMesmoHorario implements IValidation{
 
     @Autowired
@@ -13,7 +15,7 @@ public class VeterinarioComConsultaNoMesmoHorario implements IValidation{
     @Override
     public void validar(CadastrarConsultaDTO dto) {
 
-        var veterinarioComConsulta = repository.existsByIdAndData(dto.idVeterinario(), dto.dataHora());
+        var veterinarioComConsulta = repository.existsByIdAndDataHora(dto.idVeterinario(), dto.dataHora());
 
         if(veterinarioComConsulta) { throw new ValidacaoException("Veterinário já possui uma consulta neste horário.");}
     }

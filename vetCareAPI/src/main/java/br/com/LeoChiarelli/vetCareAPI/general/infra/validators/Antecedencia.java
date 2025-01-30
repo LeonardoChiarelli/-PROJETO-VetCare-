@@ -1,12 +1,14 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators;
+package br.com.LeoChiarelli.vetCareAPI.general.infra.validators;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarConsultaDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarConsultaDTO;
-import br.com.LeoChiarelli.vetCareAPI.general.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+@Component
 public class Antecedencia implements IValidation{
     @Override
     public void validar(CadastrarConsultaDTO dto) {
