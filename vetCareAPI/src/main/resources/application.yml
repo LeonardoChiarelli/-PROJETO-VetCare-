@@ -4,6 +4,12 @@ spring:
     username: ${DATASOURCE_USERNAME}
     password: ${DATASOURCE_PASSWORD}
 
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
 app:
   security:
     token:

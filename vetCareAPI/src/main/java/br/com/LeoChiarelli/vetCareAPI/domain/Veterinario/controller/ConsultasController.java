@@ -35,7 +35,7 @@ public class ConsultasController {
         return ResponseEntity.created(uri).body(consulta);
     }
 
-    @PutMapping("/consultas")
+    @PutMapping({"/admin/consultas"})
     @Transactional
     public ResponseEntity<DetalhesConsultaDTO> mudarHorario(@RequestBody @Valid AtualizarConsultaDTO dto){
         var consulta = service.atualizar(dto);
@@ -51,7 +51,7 @@ public class ConsultasController {
     }
 
     @GetMapping("/consultas/{id}")
-    public ResponseEntity detalharConsulta(@PathVariable Long id){
+    public ResponseEntity<DetalhesConsultaDTO> detalharConsulta(@PathVariable Long id){
         var consulta = repository.getReferenceById(id);
 
         return ResponseEntity.ok(new DetalhesConsultaDTO(consulta));
@@ -59,7 +59,7 @@ public class ConsultasController {
 
     @DeleteMapping({"/admin/consultas/{id}", "/tutor/consultas/{id}"})
     @Transactional
-    public ResponseEntity cancelarConsulta(@PathVariable Long id){
+    public ResponseEntity<?> cancelarConsulta(@PathVariable Long id){
         repository.deleteById(id);
 
         return ResponseEntity.noContent().build();

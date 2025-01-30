@@ -6,12 +6,12 @@ import java.time.LocalDateTime;
 
 public record DetalhesConsultaDTO(
         Long id,
-        Long idPet,
-        Long idVeterinario,
+        String pet,
+        String veterinario,
         LocalDateTime dataHora,
         String detalhes
 ) {
     public DetalhesConsultaDTO(Consulta consulta){
-        this(consulta.getId(), consulta.getPet().getId(), consulta.getVeterinario().getId(), consulta.getDataHora(), consulta.getDetalhes());
+        this(consulta.getId(), consulta.getPet().getNome(), consulta.getVeterinario().getNome(), consulta.getDataHora(), consulta.getDetalhes());
     }
 }

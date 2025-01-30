@@ -33,6 +33,7 @@ public class Consulta {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "veterinario_id")
     private Veterinario veterinario;
+
     private LocalDateTime dataHora;
 
     @Enumerated(EnumType.STRING)
@@ -44,6 +45,7 @@ public class Consulta {
         this.pet = pet;
         this.veterinario = veterinario;
         this.dataHora = dataHora;
+        this.status = Status.EM_ESPERA;
         this.detalhes = detalhes;
     }
 
@@ -56,5 +58,7 @@ public class Consulta {
         HorarioFuncionamento.validarTempo(dto);
 
         this.dataHora = dto.dataHora();
+
+        if (dto.detalhes() != null){ this.detalhes = dto.detalhes(); }
     }
 }
