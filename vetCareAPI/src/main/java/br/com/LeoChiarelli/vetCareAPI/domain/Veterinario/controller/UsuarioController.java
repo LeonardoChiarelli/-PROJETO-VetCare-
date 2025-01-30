@@ -29,7 +29,9 @@ public class UsuarioController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity efetuarLogin(@RequestBody @Valid EfetuarLoginDTO dto){
-        return ResponseEntity.ok(service.efetuarLogin(dto));
+    public ResponseEntity<?> efetuarLogin(@RequestBody @Valid EfetuarLoginDTO dto){
+        var tokenJWT = service.efetuarLogin(dto);
+
+        return ResponseEntity.ok(tokenJWT);
     }
 }
