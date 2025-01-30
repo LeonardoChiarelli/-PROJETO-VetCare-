@@ -7,8 +7,8 @@ import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Consulta;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IConsultaRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IPetRepository;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IVeterinarioRepository;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators.IValidation;
-import br.com.LeoChiarelli.vetCareAPI.general.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.validators.IValidation;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,9 +19,6 @@ import java.util.List;
 public class ConsultasService {
 
     @Autowired
-    private List<IValidation> validadores;
-
-    @Autowired
     private IConsultaRepository repository;
 
     @Autowired
@@ -29,6 +26,9 @@ public class ConsultasService {
 
     @Autowired
     private IVeterinarioRepository veterinarioRepository;
+
+    @Autowired
+    private List<IValidation> validadores;
 
     public DetalhesConsultaDTO agendar(@Valid CadastrarConsultaDTO dto) {
 

@@ -1,8 +1,8 @@
 package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarConsultaDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators.Antecedencia;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.validators.HorarioFuncionamento;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.validators.Antecedencia;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.validators.HorarioFuncionamento;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
