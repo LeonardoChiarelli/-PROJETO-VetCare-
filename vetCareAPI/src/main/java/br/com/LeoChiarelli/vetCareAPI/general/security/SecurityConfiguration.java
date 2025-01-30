@@ -29,8 +29,8 @@ public class SecurityConfiguration {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
                     req.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                    req.requestMatchers("/api/vet/**").hasRole("ADMIN");
-                    req.requestMatchers("/api/tutor/**").hasRole("ADMIN");
+                    req.requestMatchers("/api/vet/**").hasRole("VET");
+                    req.requestMatchers("/api/tutor/**").hasRole("TUTOR");
                     req.requestMatchers(HttpMethod.POST, "/api/login", "/api/cadastrar").permitAll();
                     req.anyRequest().authenticated();
                 })
