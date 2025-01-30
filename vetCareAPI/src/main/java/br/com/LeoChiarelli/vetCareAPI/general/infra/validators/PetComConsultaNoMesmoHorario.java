@@ -2,6 +2,7 @@ package br.com.LeoChiarelli.vetCareAPI.general.infra.validators;
 
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarConsultaDTO;
 import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IConsultaRepository;
+import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,7 @@ public class PetComConsultaNoMesmoHorario implements IValidation{
         var ultimoHorario = dto.dataHora().withHour(21);
 
         var petComConsulta = repository.existsByPetIdAndDataHoraBetween(dto.idPet(), primeiroHorario, ultimoHorario);
+
+        if (petComConsulta) { throw new ValidacaoException("Pet já possui uma consulta marcada no mesmo horário"); }
     }
 }
