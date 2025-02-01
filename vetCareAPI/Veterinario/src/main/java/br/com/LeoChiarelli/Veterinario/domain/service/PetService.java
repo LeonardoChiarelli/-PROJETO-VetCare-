@@ -21,11 +21,6 @@ public class PetService {
     private IVeterinarioRepository vetRepository;
 
     public Pet cadastrar(CadastrarPetDTO dto) {
-        /*
-        boolean jaCadastrado = repository.existsByNomeAndTutor(dto.nome(), dto.tutor());
-
-        if (jaCadastrado){ throw new ValidacaoException("Seu pet '" + dto.nome() + "' já está cadastrado Sr(a) " + dto.tutor(); }
-         */
 
         var pet = new Pet(dto);
         repository.save(pet);
