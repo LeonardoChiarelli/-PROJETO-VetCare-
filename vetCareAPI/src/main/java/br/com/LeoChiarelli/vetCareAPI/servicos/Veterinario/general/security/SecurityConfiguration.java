@@ -1,4 +1,4 @@
-package br.com.LeoChiarelli.vetCareAPI.general.security;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -28,10 +28,10 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(req -> {
-                    req.requestMatchers("/api/admin/**").hasRole("ADMIN");
-                    req.requestMatchers("/api/vet/**").hasRole("VET");
-                    req.requestMatchers("/api/tutor/**").hasRole("TUTOR");
-                    req.requestMatchers(HttpMethod.POST, "/api/login", "/api/cadastrar").permitAll();
+                    req.requestMatchers("/clinica/admin/**").hasRole("ADMIN");
+                    req.requestMatchers("/clinica/vet/**").hasRole("VET");
+                    req.requestMatchers("/clinica/tutor/**").hasRole("TUTOR");
+                    req.requestMatchers(HttpMethod.POST, "/clinica/login", "/clinica/cadastrar").permitAll();
                     req.anyRequest().authenticated();
                 })
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
