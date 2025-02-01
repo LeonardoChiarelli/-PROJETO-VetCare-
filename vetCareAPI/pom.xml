@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -8,11 +8,18 @@
 		<version>3.4.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+
 	<groupId>br.com.LeoChiarelli</groupId>
 	<artifactId>vetCareAPI</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>VetCare+</name>
 	<description>VetCare+ é uma plataforma para gestão de consultórios veterinários, adoção de pets e venda de produtos para animais. Oferece agendamento de consultas, histórico médico, integração com ONGs, loja virtual com rastreamento de pedidos e um sistema de fidelidade, unindo praticidade e inovação.</description>
+	<packaging>pom</packaging>
+
+	<modules>
+		<module>Veterinario</module>
+	</modules>
+
 	<url/>
 	<licenses>
 		<license/>
@@ -28,6 +35,8 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<maven.compiler.source>${java.version}</maven.compiler.source>
+		<maven.compiler.target>${java.version}</maven.compiler.target>
 	</properties>
 	<dependencies>
 
@@ -99,7 +108,7 @@
 			<scope>test</scope>
 		</dependency>
 
-		
+
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
@@ -117,13 +126,13 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.15</version>
 		</dependency>
-        <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>13.0</version>
-            <scope>compile</scope>
-        </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.jetbrains</groupId>
+			<artifactId>annotations</artifactId>
+			<version>13.0</version>
+			<scope>compile</scope>
+		</dependency>
+	</dependencies>
 
 
 	<build>

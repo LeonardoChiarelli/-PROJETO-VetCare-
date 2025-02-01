@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    url: ${VETCARE_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
+
+app:
+  security:
+    token:
+      secret: ${TOKEN_PASSWORD}
