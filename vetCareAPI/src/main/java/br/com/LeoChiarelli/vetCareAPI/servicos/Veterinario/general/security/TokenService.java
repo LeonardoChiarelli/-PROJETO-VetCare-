@@ -1,7 +1,7 @@
-package br.com.LeoChiarelli.vetCareAPI.general.security;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.security;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Usuario;
-import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Usuario;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.infra.exception.ValidacaoException;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;

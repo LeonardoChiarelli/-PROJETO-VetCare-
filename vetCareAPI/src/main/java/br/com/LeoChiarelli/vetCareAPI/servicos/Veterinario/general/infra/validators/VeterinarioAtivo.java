@@ -1,8 +1,8 @@
-package br.com.LeoChiarelli.vetCareAPI.general.infra.validators;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.infra.validators;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarConsultaDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IVeterinarioRepository;
-import br.com.LeoChiarelli.vetCareAPI.general.infra.exception.ValidacaoException;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.CadastrarConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.repository.IVeterinarioRepository;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

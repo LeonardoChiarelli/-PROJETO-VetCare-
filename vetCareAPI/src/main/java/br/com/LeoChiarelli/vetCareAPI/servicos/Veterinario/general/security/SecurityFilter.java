@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.general.security;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.security;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IUsuarioRepository;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.repository.IUsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
