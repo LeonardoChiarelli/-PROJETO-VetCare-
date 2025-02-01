@@ -1,4 +1,4 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

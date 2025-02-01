@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.repository;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Veterinario;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Veterinario;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

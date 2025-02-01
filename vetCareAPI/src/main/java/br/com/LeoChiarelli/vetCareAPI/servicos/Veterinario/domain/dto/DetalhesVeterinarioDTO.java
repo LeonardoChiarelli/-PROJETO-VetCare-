@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Veterinario;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Veterinario;
 
 public record DetalhesVeterinarioDTO(Long id, String nome, String crm, String email, String telefone) {
     public DetalhesVeterinarioDTO(Veterinario veterinario){

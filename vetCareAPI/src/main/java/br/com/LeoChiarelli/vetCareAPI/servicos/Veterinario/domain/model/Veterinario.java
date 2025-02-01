@@ -1,7 +1,7 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarDadosVeterinarioDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarVeterinarioDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.AtualizarDadosVeterinarioDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.CadastrarVeterinarioDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
