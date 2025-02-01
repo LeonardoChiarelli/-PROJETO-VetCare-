@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.repository;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Consulta;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Consulta;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Page;

@@ -1,4 +1,4 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.Future;
@@ -6,14 +6,10 @@ import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDateTime;
 
-public record CadastrarConsultaDTO(
+public record AtualizarConsultaDTO(
+
+        @NotNull
         Long id,
-
-        @NotNull
-        Long idPet,
-
-        @NotNull
-        Long idVeterinario,
 
         @NotNull
         @Future

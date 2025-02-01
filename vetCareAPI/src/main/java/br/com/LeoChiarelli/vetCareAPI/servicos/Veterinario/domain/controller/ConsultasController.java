@@ -1,8 +1,10 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.controller;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.controller;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.*;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IConsultaRepository;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.ConsultasService;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.AtualizarConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.CadastrarConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.DetalhesConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.ListaConsultasDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.service.ConsultasService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -15,15 +17,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/clinica")
 @SecurityRequirement(name = "bearer-key")
 public class ConsultasController {
 
     @Autowired
     private ConsultasService service;
-
-    @Autowired
-    private IConsultaRepository repository;
 
     @PostMapping({"/admin/consultas", "/tutor/consultas"})
     @Transactional
@@ -35,33 +34,44 @@ public class ConsultasController {
         return ResponseEntity.created(uri).body(consulta);
     }
 
-    @PutMapping({"/admin/consultas"})
+    @PutMapping("/admin/consultas")
     @Transactional
     public ResponseEntity<DetalhesConsultaDTO> mudarHorario(@RequestBody @Valid AtualizarConsultaDTO dto){
-        var consulta = service.atualizar(dto);
 
-        return ResponseEntity.ok().body(consulta);
+        return ResponseEntity.ok().body(service.mudarHorario(dto));
+    }
+
+    @PutMapping({"/admin/agendar/{id}", "/vet/agendar/{id}"})
+    @Transactional
+    public ResponseEntity<String> confirmarConsulta(@PathVariable Long id){
+        service.confirmar(id);
+        return ResponseEntity.ok("Consulta confirmada");
+    }
+
+    @PutMapping({"/admin/concluir/{id}", "/vet/concluir/{id}"})
+    @Transactional
+    public ResponseEntity<?> concluirConsulta(@PathVariable Long id){
+        service.concluir(id);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping({"vet/consultas/{idVeterinario}", "/admin/consultas/{idVeterinario}"})
     public ResponseEntity<Page<ListaConsultasDTO>> listarConsultas(@PathVariable Long idVeterinario, @PageableDefault(sort = {"dataHora"})Pageable pageable){
-        var page = repository.findAllByVeterinarioId(idVeterinario, pageable).map(ListaConsultasDTO::new);
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(service.listar(idVeterinario, pageable));
     }
 
     @GetMapping("/consultas/{id}")
     public ResponseEntity<DetalhesConsultaDTO> detalharConsulta(@PathVariable Long id){
-        var consulta = repository.getReferenceById(id);
 
-        return ResponseEntity.ok(new DetalhesConsultaDTO(consulta));
+        return ResponseEntity.ok(service.detalhar(id));
     }
 
     @DeleteMapping({"/admin/consultas/{id}", "/tutor/consultas/{id}"})
     @Transactional
     public ResponseEntity<?> cancelarConsulta(@PathVariable Long id){
-        repository.deleteById(id);
 
+        service.cancelar(id);
         return ResponseEntity.noContent().build();
     }
 }

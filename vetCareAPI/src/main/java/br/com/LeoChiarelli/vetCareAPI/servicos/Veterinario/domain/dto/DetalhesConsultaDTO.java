@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Consulta;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Consulta;
 
 import java.time.LocalDateTime;
 

@@ -1,8 +1,8 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.AtualizarConsultaDTO;
-import br.com.LeoChiarelli.vetCareAPI.general.infra.validators.Antecedencia;
-import br.com.LeoChiarelli.vetCareAPI.general.infra.validators.HorarioFuncionamento;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.AtualizarConsultaDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.infra.validators.Antecedencia;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.infra.validators.HorarioFuncionamento;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Future;
@@ -49,10 +49,6 @@ public class Consulta {
         this.detalhes = detalhes;
     }
 
-    public void marcarConsulta(){}
-    public void cancelarConsulta(){}
-    public void alterarHorario(){}
-
     public void mudarHorario(@Valid AtualizarConsultaDTO dto) {
         Antecedencia.validarTempo(dto);
         HorarioFuncionamento.validarTempo(dto);
@@ -60,5 +56,13 @@ public class Consulta {
         this.dataHora = dto.dataHora();
 
         if (dto.detalhes() != null){ this.detalhes = dto.detalhes(); }
+    }
+
+    public void confirmar() {
+        this.status = Status.AGENDADA;
+    }
+
+    public void concluir() {
+        this.status = Status.CONCLUIDA;
     }
 }
