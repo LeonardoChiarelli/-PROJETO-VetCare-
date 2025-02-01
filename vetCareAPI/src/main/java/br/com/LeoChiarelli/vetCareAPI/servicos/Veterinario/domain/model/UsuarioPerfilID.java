@@ -1,4 +1,4 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;

@@ -1,13 +1,11 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.controller;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.controller;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.CadastrarUsuarioDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.EfetuarLoginDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.MudarRoleUsuarioDTO;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Perfil;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Usuario;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IUsuarioRepository;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.UsuarioService;
-import br.com.LeoChiarelli.vetCareAPI.general.security.TokenService;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.CadastrarUsuarioDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.EfetuarLoginDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.MudarRoleUsuarioDTO;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Usuario;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.service.UsuarioService;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.general.security.TokenService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,11 +13,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/clinica")
 public class UsuarioController {
 
     @Autowired
@@ -31,19 +28,10 @@ public class UsuarioController {
     @Autowired
     private TokenService tokenService;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private IUsuarioRepository repository;
-
-
     @PostMapping("/cadastrar")
     @Transactional
     public ResponseEntity<String> cadastrar(@RequestBody @Valid CadastrarUsuarioDTO dto) {
-        String senhaEncriptada = passwordEncoder.encode(dto.senha());
-
-        repository.save(new Usuario(dto.nome(), dto.email(), senhaEncriptada));
+        service.cadastrar(dto);
 
         return ResponseEntity.ok().body("Usuário criado com sucesso");
     }
