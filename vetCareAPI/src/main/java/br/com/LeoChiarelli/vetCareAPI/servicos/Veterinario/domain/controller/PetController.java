@@ -1,8 +1,7 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.controller;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.controller;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto.*;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.repository.IPetRepository;
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.service.PetService;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto.*;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.service.PetService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -15,15 +14,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/clinica")
 @SecurityRequirement(name = "bearer-key")
 public class PetController {
 
     @Autowired
     private PetService service;
-
-    @Autowired
-    private IPetRepository repository;
 
     @PostMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
@@ -38,44 +34,34 @@ public class PetController {
     @PutMapping("/admin/pets/{id}")
     @Transactional
     public ResponseEntity<DetalhesPetDTO> vincularVet(@PathVariable Long id, @RequestBody @Valid VincularVeterinarioDTO dto){
-        var veterinario = service.vincular(dto);
-        var pet = repository.getReferenceById(id);
 
-        pet.vincular(veterinario);
-
-        return ResponseEntity.ok().body(new DetalhesPetDTO(pet));
+        return ResponseEntity.ok().body(service.vincular(id, dto));
     }
 
     @PutMapping({"/tutor/pets", "/admin/pets"})
     @Transactional
     public ResponseEntity<DetalhesPetDTO> atualizarVeterinario(@RequestBody @Valid AtualizarDadosPetDTO dto){
-        var veterinario = service.atualizar(dto);
-        var pet = repository.getReferenceById(dto.id());
 
-        pet.vincular(veterinario);
-
-        return ResponseEntity.ok().body(new DetalhesPetDTO(pet));
+        return ResponseEntity.ok().body(service.atualizarVinculo(dto));
     }
 
     @GetMapping("/pets")
     public ResponseEntity<Page<ListaPetsDTO>> listarPets(@PageableDefault(sort = {"nome"}) Pageable pageable){
-        var page = repository.findAll(pageable).map(ListaPetsDTO::new);
 
-        return ResponseEntity.ok(page);
+        return ResponseEntity.ok(service.listar(pageable));
     }
 
     @GetMapping("/pets/{id}")
     public ResponseEntity<DetalhesPetDTO> detalharPet(@PathVariable Long id){
-        var pet = repository.getReferenceById(id);
 
-        return ResponseEntity.ok(new DetalhesPetDTO(pet));
+        return ResponseEntity.ok(service.detalhar(id));
     }
 
     @DeleteMapping({"/admin/pets/{id}", "/tutor/pets/{id}"})
     @Transactional
     public ResponseEntity<?> deletarPet(@PathVariable Long id){
-        repository.deleteById(id);
 
+        service.deletar(id);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,6 +1,6 @@
-package br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.dto;
+package br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.dto;
 
-import br.com.LeoChiarelli.vetCareAPI.domain.Veterinario.model.Especie;
+import br.com.LeoChiarelli.vetCareAPI.servicos.Veterinario.domain.model.Especie;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
