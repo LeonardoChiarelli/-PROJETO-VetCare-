@@ -30,9 +30,9 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
 
-    @ManyToOne
-    @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = ""))
-    private List<Perfil> perfis;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
+    private List<Perfil> perfis = new ArrayList<>();
 
     public Usuario(@NotBlank String nome, @NotBlank @Email String email, String senhaEncriptada) {
         this.id = null;

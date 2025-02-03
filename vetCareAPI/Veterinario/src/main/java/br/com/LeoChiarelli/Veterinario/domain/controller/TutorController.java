@@ -35,7 +35,7 @@ public class TutorController {
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
-    @PutMapping("/tutores/adicionar/")
+    @PatchMapping("/tutores/adicionar/")
     @Transactional
     public ResponseEntity<DetalhesTutorDTO> adicionarPet(@RequestBody @Valid AdicionarTutorPetDTO dto){
         return ResponseEntity.ok(service.adicionar(dto));

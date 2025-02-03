@@ -35,7 +35,7 @@ public class VeterinarioService {
         return veterinario;
     }
 
-    public void deletar(Long id){
+    public void desativar(Long id){
         var veterinario = repository.getReferenceById(id);
 
         veterinario.desativar();

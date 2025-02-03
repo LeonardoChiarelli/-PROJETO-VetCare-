@@ -42,7 +42,7 @@ public class VeterinarioController {
         return ResponseEntity.ok().body(new DetalhesVeterinarioDTO(veterinario));
     }
 
-    @PutMapping("/admin/veterinarios/{id}")
+    @PatchMapping("/admin/veterinarios/{id}")
     @Transactional
     public ResponseEntity<String> ativar(@PathVariable Long id){
         service.ativar(id);
@@ -63,8 +63,8 @@ public class VeterinarioController {
 
     @DeleteMapping("/admin/veterinarios/{id}")
     @Transactional
-    public ResponseEntity<?> delete(@PathVariable Long id){
-        service.deletar(id);
+    public ResponseEntity<?> desativar(@PathVariable Long id){
+        service.desativar(id);
 
         return ResponseEntity.noContent().build();
     }
