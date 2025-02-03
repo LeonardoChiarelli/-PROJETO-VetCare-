@@ -10,6 +10,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "perfis")
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter
 public class Perfil implements GrantedAuthority {
 
     @Getter

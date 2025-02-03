@@ -34,11 +34,16 @@ public class Usuario implements UserDetails {
     @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private List<Perfil> perfis = new ArrayList<>();
 
-    public Usuario(@NotBlank String nome, @NotBlank @Email String email, String senhaEncriptada) {
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id")
+    private Perfil perfil_id;
+
+    public Usuario(@NotBlank String nome, @NotBlank @Email String email, Perfil perfil, String senhaEncriptada) {
         this.id = null;
         this.nome = nome;
         this.email = email;
         this.senha = senhaEncriptada;
+        this.perfil_id = perfil;
     }
 
     public Boolean isAdmin() { return this.perfis.stream().anyMatch(Perfil::isAdmin); }

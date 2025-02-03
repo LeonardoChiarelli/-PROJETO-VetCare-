@@ -1,5 +1,6 @@
 package br.com.LeoChiarelli.Veterinario.domain.service;
 
+import br.com.LeoChiarelli.Veterinario.domain.model.Perfil;
 import br.com.LeoChiarelli.Veterinario.domain.repository.IPerfilRepository;
 import br.com.LeoChiarelli.Veterinario.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.Veterinario.domain.repository.IUsuarioRepository;
@@ -44,20 +45,19 @@ public class UsuarioService implements UserDetailsService {
 
         var existeTutor = tutorRepository.existsByEmail(dto.email());
         var existeVet = veterinarioRepository.existsByEmail(dto.email());
+        String senhaEncriptada = passwordEncoder.encode(dto.senha());
 
         if(existeTutor) {
             var tutor = tutorRepository.getReferencesByEmail(dto.email());
-            String senhaEncriptada = passwordEncoder.encode(dto.senha());
-            var usuario = repository.save(new Usuario(tutor.getNome(), dto.email(), senhaEncriptada));
-            usuario.getPerfis().clear();
-            usuario.getPerfis().add(tutor.getPerfil());
+
+
+            Perfil perfil = perfilRepository.getReferenceById(2L);
+            repository.save(new Usuario(tutor.getNome(), dto.email(), perfil, senhaEncriptada));
         }
         if(existeVet) {
             var veterinario = veterinarioRepository.getReferencesByEmail(dto.email());
-            String senhaEncriptada = passwordEncoder.encode(dto.senha());
-            var usuario = repository.save(new Usuario(veterinario.getNome(), dto.email(), senhaEncriptada));
-            usuario.getPerfis().clear();
-            usuario.getPerfis().add(veterinario.getPerfil());
+            Perfil perfil = perfilRepository.getReferenceById(3L);
+            repository.save(new Usuario(veterinario.getNome(), dto.email(), perfil, senhaEncriptada));
         }
 
     }
