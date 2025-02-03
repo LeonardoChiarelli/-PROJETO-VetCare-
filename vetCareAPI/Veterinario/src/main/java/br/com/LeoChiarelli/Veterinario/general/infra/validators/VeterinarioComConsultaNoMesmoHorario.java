@@ -15,7 +15,7 @@ public class VeterinarioComConsultaNoMesmoHorario implements IValidation{
     @Override
     public void validar(CadastrarConsultaDTO dto) {
 
-        var veterinarioComConsulta = repository.existsByIdAndDataHora(dto.idVeterinario(), dto.dataHora());
+        var veterinarioComConsulta = repository.existsByVeterinarioIdAndDataHora(dto.idVeterinario(), dto.dataHora());
 
         if(veterinarioComConsulta) { throw new ValidacaoException("Veterinário já possui uma consulta neste horário.");}
     }
