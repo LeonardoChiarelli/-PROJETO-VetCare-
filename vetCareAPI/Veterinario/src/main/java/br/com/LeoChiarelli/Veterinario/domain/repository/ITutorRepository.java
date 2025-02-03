@@ -1,6 +1,5 @@
 package br.com.LeoChiarelli.Veterinario.domain.repository;
 
-import br.com.LeoChiarelli.Veterinario.domain.model.Pet;
 import br.com.LeoChiarelli.Veterinario.domain.model.Tutor;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -17,9 +16,9 @@ public interface ITutorRepository extends JpaRepository<Tutor, Long> {
 
     boolean existsByCpf(@NotBlank @Pattern(regexp = "\\d{11,15}") String cpf);
 
-    boolean existsByPets(Pet idPet);
-
     boolean existsByEmail(@NotBlank @Email String email);
 
     Tutor getReferencesByEmail(@NotBlank @Email String email);
+
+    Tutor getReferenceByCpf(String cpf);
 }

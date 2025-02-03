@@ -2,7 +2,6 @@ package br.com.LeoChiarelli.Veterinario.domain.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public record CadastrarTutorDTO(
@@ -16,14 +15,11 @@ public record CadastrarTutorDTO(
         String cpf,
 
         @NotBlank
-        @Pattern(regexp = "\\d{11,17}")
+        @Pattern(regexp = "\\d{10,15}")
         String telefone,
 
         @NotBlank
         @Email
-        String email,
-
-        @NotNull
-        Long pet_id
+        String email
 ) {
 }

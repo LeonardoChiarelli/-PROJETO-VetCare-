@@ -1,6 +1,5 @@
 package br.com.LeoChiarelli.Veterinario.domain.controller;
 
-import br.com.LeoChiarelli.Veterinario.domain.dto.AdicionarTutorPetDTO;
 import br.com.LeoChiarelli.Veterinario.domain.dto.AtualizarDadosTutorDTO;
 import br.com.LeoChiarelli.Veterinario.domain.dto.CadastrarTutorDTO;
 import br.com.LeoChiarelli.Veterinario.domain.dto.DetalhesTutorDTO;
@@ -24,22 +23,25 @@ public class TutorController {
     public ResponseEntity<DetalhesTutorDTO> cadastrarTutor(@RequestBody @Valid CadastrarTutorDTO dto, UriComponentsBuilder uriBuilder){
         var tutor = service.cadastrar(dto);
 
-        var uri = uriBuilder.path("tutores/{cpf}").buildAndExpand(dto.cpf()).toUri();
+        var uri = uriBuilder.path("/{cpf}").buildAndExpand(dto.cpf()).toUri();
 
         return ResponseEntity.created(uri).body(tutor);
     }
 
-    @PutMapping("/tutores/atualizar/{id}")
+    @PatchMapping("/tutores/atualizar/{id}")
     @Transactional
     public ResponseEntity<DetalhesTutorDTO> atualizarInfo(@PathVariable Long id, @RequestBody @Valid AtualizarDadosTutorDTO dto){
         return ResponseEntity.ok(service.atualizar(id, dto));
     }
 
-    @PatchMapping("/tutores/adicionar/")
+    @PatchMapping("/tutores/ativar/{cpf}")
     @Transactional
-    public ResponseEntity<DetalhesTutorDTO> adicionarPet(@RequestBody @Valid AdicionarTutorPetDTO dto){
-        return ResponseEntity.ok(service.adicionar(dto));
+    public ResponseEntity<String> reativarTutor(@PathVariable String cpf){
+        service.reativar(cpf);
+
+        return ResponseEntity.ok("Tutor ativo");
     }
+
 
     @GetMapping("tutores/{cpf}")
     public ResponseEntity<DetalhesTutorDTO> buscarTutor(@PathVariable String cpf){

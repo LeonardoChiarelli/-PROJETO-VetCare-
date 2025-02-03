@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Entity
 @Table(name = "tutores")
 @NoArgsConstructor
@@ -28,10 +26,6 @@ public class Tutor {
     private String telefone;
     private String email;
 
-    @OneToMany
-    @JoinColumn(name = "pet_id")
-    private List<Pet> pets;
-
     private boolean ativo;
 
     @ElementCollection(targetClass = Perfil.class)
@@ -39,24 +33,25 @@ public class Tutor {
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
 
-    public Tutor(@Valid CadastrarTutorDTO dto, Pet pet) {
+    public Tutor(@Valid CadastrarTutorDTO dto, Perfil perfil) {
         this.nome = dto.nome();
         this.cpf = dto.cpf();
+        this.telefone = dto.telefone();
         this.email = dto.email();
-        this.pets.add(pet);
         this.ativo = true;
+        this.perfil = perfil;
     }
 
     public void atualizar(@Valid AtualizarDadosTutorDTO dto) {
         if (dto.telefone() != null) { this.telefone = dto.telefone(); }
-        if (dto.email() != null) { this.email = dto.email(); }
     }
 
     public void desativar() {
         this.ativo = false;
     }
 
-    public void adicionarPet(Pet pet) {
-        this.pets.add(pet);
+    public void ativar(){
+        this.ativo = true;
     }
+
 }
