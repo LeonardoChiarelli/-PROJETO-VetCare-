@@ -34,6 +34,10 @@ public class Tutor {
 
     private boolean ativo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id")
+    private Perfil perfil;
+
     public Tutor(@Valid CadastrarTutorDTO dto, Pet pet) {
         this.nome = dto.nome();
         this.cpf = dto.cpf();
