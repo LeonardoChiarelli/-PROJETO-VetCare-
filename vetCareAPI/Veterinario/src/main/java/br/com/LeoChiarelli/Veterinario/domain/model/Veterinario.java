@@ -28,6 +28,10 @@ public class Veterinario {
     private String telefone;
     private boolean ativo;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id")
+    private Perfil perfil;
+
 
     public Veterinario(CadastrarVeterinarioDTO dto){
         this.ativo = true;

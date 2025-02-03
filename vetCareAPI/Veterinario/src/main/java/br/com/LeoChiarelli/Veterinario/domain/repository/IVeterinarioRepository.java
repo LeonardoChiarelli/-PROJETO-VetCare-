@@ -17,4 +17,8 @@ public interface IVeterinarioRepository extends JpaRepository<Veterinario, Long>
 
     @Query("SELECT v.ativo FROM Veterinario v WHERE v.id = :idVeterinario")
     Boolean findAtivoById(@NotNull Long idVeterinario);
+
+    boolean existsByEmail(@NotBlank @Email String email);
+
+    Veterinario getReferencesByEmail(@NotBlank @Email String email);
 }
