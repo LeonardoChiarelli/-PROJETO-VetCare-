@@ -30,8 +30,8 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "perfil_id")
+    @ManyToOne
+    @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = ""))
     private List<Perfil> perfis;
 
     public Usuario(@NotBlank String nome, @NotBlank @Email String email, String senhaEncriptada) {

@@ -28,7 +28,8 @@ public class Veterinario {
     private String telefone;
     private boolean ativo;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ElementCollection(targetClass = Perfil.class)
+    @ManyToOne
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
 
