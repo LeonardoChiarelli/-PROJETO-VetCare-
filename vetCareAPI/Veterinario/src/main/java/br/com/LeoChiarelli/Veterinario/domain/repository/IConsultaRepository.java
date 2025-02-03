@@ -21,4 +21,6 @@ public interface IConsultaRepository extends JpaRepository<Consulta, Long> {
 
     @Query("SELECT c FROM Consulta c WHERE c.id = :consultaId")
     Optional<Consulta> buscarConsulta(@NotNull Long consultaId);
+
+    Boolean existsByVeterinarioIdAndDataHora(@NotNull Long idVeterinario, @NotNull @Future LocalDateTime localDateTime);
 }
