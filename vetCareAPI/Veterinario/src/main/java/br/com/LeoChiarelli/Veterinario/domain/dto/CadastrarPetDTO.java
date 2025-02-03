@@ -21,9 +21,12 @@ public record CadastrarPetDTO(
 
         @NotNull
         @JsonFormat(pattern = "dd/MM/yyyy")
-        LocalDate dataAniversario
+        LocalDate dataAniversario,
 
-        //@NotNull
-        //Tutor tutor
+        @NotNull
+        Long veterinario_id,
+
+        @NotNull
+        Long tutor_id
 ) {
 }

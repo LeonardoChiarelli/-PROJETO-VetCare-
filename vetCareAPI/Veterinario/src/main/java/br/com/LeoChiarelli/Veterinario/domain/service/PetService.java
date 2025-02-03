@@ -3,6 +3,7 @@ package br.com.LeoChiarelli.Veterinario.domain.service;
 import br.com.LeoChiarelli.Veterinario.domain.dto.*;
 import br.com.LeoChiarelli.Veterinario.domain.model.Pet;
 import br.com.LeoChiarelli.Veterinario.domain.repository.IPetRepository;
+import br.com.LeoChiarelli.Veterinario.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.Veterinario.domain.repository.IVeterinarioRepository;
 import br.com.LeoChiarelli.Veterinario.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
@@ -20,9 +21,14 @@ public class PetService {
     @Autowired
     private IVeterinarioRepository vetRepository;
 
+    @Autowired
+    private ITutorRepository tutorRepository;
+
     public Pet cadastrar(CadastrarPetDTO dto) {
 
-        var pet = new Pet(dto);
+        var veterinario = vetRepository.getReferenceById(dto.veterinario_id());
+        var tutor = tutorRepository.getReferenceById(dto.tutor_id());
+        var pet = new Pet(dto, veterinario, tutor);
         repository.save(pet);
         return pet;
     }

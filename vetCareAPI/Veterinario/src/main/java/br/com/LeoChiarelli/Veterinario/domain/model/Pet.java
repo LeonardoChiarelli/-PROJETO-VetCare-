@@ -30,12 +30,18 @@ public class Pet {
     @JoinColumn(name = "veterinario_id")
     private Veterinario veterinario;
 
-    public Pet(CadastrarPetDTO dto) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
+
+    public Pet(CadastrarPetDTO dto, Veterinario veterinario, Tutor tutor) {
         this.id = null;
         this.nome = dto.nome();
         this.especie = dto.especie();
         this.raca = dto.raca();
         this.dataAniversario = dto.dataAniversario();
+        this.veterinario = veterinario;
+        this.tutor = tutor;
     }
 
     public void adicionarHistorico(Veterinario veterinario){}
