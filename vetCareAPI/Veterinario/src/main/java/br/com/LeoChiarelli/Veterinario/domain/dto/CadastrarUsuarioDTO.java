@@ -7,9 +7,6 @@ public record CadastrarUsuarioDTO(
         Long id,
 
         @NotBlank
-        String nome,
-
-        @NotBlank
         @Email
         String email,
 

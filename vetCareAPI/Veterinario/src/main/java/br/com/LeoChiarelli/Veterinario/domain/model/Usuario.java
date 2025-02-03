@@ -30,22 +30,20 @@ public class Usuario implements UserDetails {
     private String email;
     private String senha;
 
-    @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
-    private List<Perfil> perfis = new ArrayList<>();
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "perfil_id")
+    private List<Perfil> perfis;
 
     public Usuario(@NotBlank String nome, @NotBlank @Email String email, String senhaEncriptada) {
         this.id = null;
         this.nome = nome;
         this.email = email;
         this.senha = senhaEncriptada;
-        this.perfis.add(new Perfil(4L));
     }
 
     public Boolean isAdmin() { return this.perfis.stream().anyMatch(Perfil::isAdmin); }
     public Boolean isTutor() { return this.perfis.stream().anyMatch(Perfil::isTutor); }
     public Boolean isVet() { return this.perfis.stream().anyMatch(Perfil::isVet); }
-    public Boolean isVisualizador() {return this.perfis.stream().anyMatch(Perfil::isVisualizador); }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

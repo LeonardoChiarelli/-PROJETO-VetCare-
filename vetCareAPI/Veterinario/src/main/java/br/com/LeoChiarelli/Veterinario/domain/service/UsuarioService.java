@@ -1,10 +1,12 @@
 package br.com.LeoChiarelli.Veterinario.domain.service;
 
 import br.com.LeoChiarelli.Veterinario.domain.repository.IPerfilRepository;
+import br.com.LeoChiarelli.Veterinario.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.Veterinario.domain.repository.IUsuarioRepository;
 import br.com.LeoChiarelli.Veterinario.domain.dto.CadastrarUsuarioDTO;
 import br.com.LeoChiarelli.Veterinario.domain.dto.MudarRoleUsuarioDTO;
 import br.com.LeoChiarelli.Veterinario.domain.model.Usuario;
+import br.com.LeoChiarelli.Veterinario.domain.repository.IVeterinarioRepository;
 import br.com.LeoChiarelli.Veterinario.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +26,14 @@ public class UsuarioService implements UserDetailsService {
     private IPerfilRepository perfilRepository;
 
     @Autowired
+    private ITutorRepository tutorRepository;
+
+    @Autowired
+    private IVeterinarioRepository veterinarioRepository;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
@@ -32,11 +41,27 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public void cadastrar(@Valid CadastrarUsuarioDTO dto) {
-        String senhaEncriptada = passwordEncoder.encode(dto.senha());
 
-        repository.save(new Usuario(dto.nome(), dto.email(), senhaEncriptada));
+        var existeTutor = tutorRepository.existsByEmail(dto.email());
+        var existeVet = veterinarioRepository.existsByEmail(dto.email());
+
+        if(existeTutor) {
+            var tutor = tutorRepository.getReferencesByEmail(dto.email());
+            String senhaEncriptada = passwordEncoder.encode(dto.senha());
+            var usuario = repository.save(new Usuario(tutor.getNome(), dto.email(), senhaEncriptada));
+            usuario.getPerfis().clear();
+            usuario.getPerfis().add(tutor.getPerfil());
+        }
+        if(existeVet) {
+            var veterinario = veterinarioRepository.getReferencesByEmail(dto.email());
+            String senhaEncriptada = passwordEncoder.encode(dto.senha());
+            var usuario = repository.save(new Usuario(veterinario.getNome(), dto.email(), senhaEncriptada));
+            usuario.getPerfis().clear();
+            usuario.getPerfis().add(veterinario.getPerfil());
+        }
+
     }
-    
+
     public void mudarRole(MudarRoleUsuarioDTO dto) {
 
         var usuario = repository.findById(dto.idUsuario()).orElseThrow(() -> new ValidacaoException("Usuário não encontrado"));
