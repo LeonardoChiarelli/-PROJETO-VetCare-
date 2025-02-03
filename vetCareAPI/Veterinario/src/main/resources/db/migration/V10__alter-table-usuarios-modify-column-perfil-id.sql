@@ -1,0 +1,1 @@
+alter table usuarios modify column perfil_id bigint not null default 0;
