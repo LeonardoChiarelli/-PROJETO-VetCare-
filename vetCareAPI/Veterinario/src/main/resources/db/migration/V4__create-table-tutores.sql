@@ -7,7 +7,7 @@ create table tutores(
     email varchar(100) not null unique,
     pet_id bigint not null,
     ativo tinyint not null default 0,
-    perfil_id bigint not null default 3,
+    perfil_id bigint not null default 2,
 
     primary key(id),
     constraint fk_tutores_pet_id foreign key(pet_id) references pets(id),

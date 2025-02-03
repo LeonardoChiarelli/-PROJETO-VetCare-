@@ -5,7 +5,7 @@ create table usuarios(
     senha varchar(100) not null,
     perfil_id bigint not null,
 
-    primary key(id)
+    primary key(id),
     constraint fk_usuarios_perfil_id foreign key(perfil_id) references perfis(id)
 );
 

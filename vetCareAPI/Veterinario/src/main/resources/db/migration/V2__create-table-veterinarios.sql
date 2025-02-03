@@ -6,7 +6,7 @@ create table veterinarios(
     telefone varchar(13) not null,
     especialidade varchar(100),
     ativo tinyint(2) not null default 0,
-    perfil_id bigint not null default 2,
+    perfil_id bigint not null default 3,
 
     primary key(id),
     constraint fk_veterinarios_perfil_id foreign key(perfil_id) references perfis(id)
