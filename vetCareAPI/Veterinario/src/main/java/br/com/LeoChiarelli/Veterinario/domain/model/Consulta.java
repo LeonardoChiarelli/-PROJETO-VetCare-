@@ -34,6 +34,7 @@ public class Consulta {
     @JoinColumn(name = "veterinario_id")
     private Veterinario veterinario;
 
+    @Column(name = "data_hora")
     private LocalDateTime dataHora;
 
     @Enumerated(EnumType.STRING)
