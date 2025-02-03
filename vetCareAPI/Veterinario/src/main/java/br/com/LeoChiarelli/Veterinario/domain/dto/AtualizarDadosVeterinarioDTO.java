@@ -9,8 +9,6 @@ public record AtualizarDadosVeterinarioDTO(
         Long id,
 
         @Pattern(regexp = "\\d{9,13}")
-        String telefone,
-
-        String email
+        String telefone
 ) {
 }

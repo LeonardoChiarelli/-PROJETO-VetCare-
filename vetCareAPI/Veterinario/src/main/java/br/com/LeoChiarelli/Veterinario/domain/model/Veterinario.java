@@ -34,9 +34,10 @@ public class Veterinario {
     private Perfil perfil;
 
 
-    public Veterinario(CadastrarVeterinarioDTO dto){
+    public Veterinario(CadastrarVeterinarioDTO dto, Perfil perfil){
         this.ativo = true;
         this.id = null;
+        this.perfil = perfil;
         this.nome = dto.nome();
         this.crm = dto.crm();
         this.email = dto.email();
@@ -47,7 +48,6 @@ public class Veterinario {
     public void listarConsultas(){}
 
     public void atualizarInfo(@Valid AtualizarDadosVeterinarioDTO dto) {
-        if (dto.email() != null) { this.email = dto.email(); }
         if (dto.telefone() != null) { this.telefone = dto.telefone(); }
     }
 

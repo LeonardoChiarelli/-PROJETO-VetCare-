@@ -34,7 +34,7 @@ public class VeterinarioController {
         return ResponseEntity.created(uri).body(new DetalhesVeterinarioDTO(veterinario));
     }
 
-    @PutMapping({"/vet/veterinarios", "/admin/veterinarios"})
+    @PatchMapping({"/vet/veterinarios", "/admin/veterinarios"})
     @Transactional
     public ResponseEntity<DetalhesVeterinarioDTO> atualizarInfo(@RequestBody @Valid AtualizarDadosVeterinarioDTO dto){
         var veterinario = service.atualizar(dto);
