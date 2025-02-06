@@ -18,6 +18,8 @@
 
 	<modules>
 		<module>Clinica_Veterina</module>
+		<module>Adocao</module>
+		<module>Store</module>
 	</modules>
 
 	<url/>

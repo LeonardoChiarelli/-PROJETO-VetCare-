@@ -13,8 +13,6 @@ import java.util.Optional;
 
 public interface IConsultaRepository extends JpaRepository<Consulta, Long> {
 
-    boolean existsByIdAndDataHora(@NotNull Long idVeterinario, @NotNull @Future LocalDateTime dataHora);
-
     Boolean existsByPetIdAndDataHoraBetween(@NotNull Long idPet, LocalDateTime primeiroHorario, LocalDateTime ultimoHorario);
 
     Page<Consulta> findAllByVeterinarioId(Long idVeterinario, Pageable pageable);
