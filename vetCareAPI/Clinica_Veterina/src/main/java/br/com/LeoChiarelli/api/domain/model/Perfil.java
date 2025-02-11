@@ -2,6 +2,7 @@ package br.com.LeoChiarelli.api.domain.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 @Table(name = "perfis")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Getter
 public class Perfil implements GrantedAuthority {
 

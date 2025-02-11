@@ -18,7 +18,7 @@ public class AdocaoController {
     @Autowired
     private AdocaoService service;
 
-    @PostMapping("/solicitar")
+    @PostMapping("/tutor/solicitar")
     @Transactional
     public ResponseEntity<DetalhesAdocaoDTO> solicitar(@RequestBody @Valid CadastrarAdocaoDTO dto, UriComponentsBuilder uriBuilder){
         var adocao = service.solicitar(dto);
@@ -28,7 +28,7 @@ public class AdocaoController {
         return ResponseEntity.created(uri).body(adocao);
     }
 
-    @PatchMapping("/aprovar/{id}")
+    @PatchMapping("/ong/aprovar/{id}")
     @Transactional
     public ResponseEntity<String> aprovar(@PathVariable Long id){
         service.aprovar(id);
@@ -36,7 +36,7 @@ public class AdocaoController {
         return ResponseEntity.ok("A adoção foi aprovada!");
     }
 
-    @PatchMapping
+    @PatchMapping("/ong/reprovar")
     @Transactional
     public ResponseEntity<String> reprovar(@RequestBody @Valid ReprovarAdocaoDTO dto){
         var justificativa = service.reprovar(dto);

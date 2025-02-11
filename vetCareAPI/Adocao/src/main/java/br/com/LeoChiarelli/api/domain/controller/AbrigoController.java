@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/adocoes/abrigos")
+@RequestMapping("/adocoes")
 public class AbrigoController {
 
     @Autowired
     private AbrigoService service;
 
-    @PostMapping("/cadastrar")
+    @PostMapping("/abrigo/cadastrar")
     @Transactional
     public ResponseEntity<DetalhesAbrigoDTO> cadastrarAbrigo(@RequestBody @Valid CadastrarAbrigoDTO dto, UriComponentsBuilder uriBuilder){
         var abrigo = service.cadastrar(dto);
@@ -29,23 +29,23 @@ public class AbrigoController {
         return ResponseEntity.created(uri).body(abrigo);
     }
 
-    @PutMapping("/atualizar")
+    @PutMapping("/ong/atualizar")
     @Transactional
     public ResponseEntity<DetalhesAbrigoDTO> atualizarInfo(@RequestBody @Valid AtualizarAbrigoDTO dto){
         return ResponseEntity.ok(service.atualizar(dto));
     }
 
-    @GetMapping("/listar")
+    @GetMapping("/tutor/listar")
     public ResponseEntity<Page<ListaAbrigosDTO>> listarAbrigos(@PageableDefault(sort = {"nome"}) Pageable pageable){
         return ResponseEntity.ok(service.listar(pageable));
     }
 
-    @GetMapping("/{idOuNome")
+    @GetMapping("/tutor/{idOuNome")
     public ResponseEntity<DetalhesAbrigoDTO> detalharAbrigo(@PathVariable String idOuNome){
         return ResponseEntity.ok(service.detalhar(idOuNome));
     }
 
-    @PostMapping("/pets/cadastrar/{idOuNome}")
+    @PostMapping("/ong/pets/{idOuNome}")
     @Transactional
     public ResponseEntity<DetalhesPetDTO> cadastrarPetNoAbrigo(@RequestBody @Valid CadastrarPetDTO dto, @PathVariable String idOuNome, UriComponentsBuilder uriBuilder){
         var pet = service.cadastrarPet(dto, idOuNome);
@@ -55,12 +55,12 @@ public class AbrigoController {
         return ResponseEntity.created(uri).body(pet);
     }
 
-    @GetMapping("/{idOuNome}/pets")
+    @GetMapping({"/ong/{idOuNome}/pets", "/tutor/{idOuNome}/pets"})
     public ResponseEntity<Page<ListaPetsDTO>> listarPetsDoAbrigo(@PathVariable String idOuNome, @PageableDefault(sort = {"nome"}) Pageable pageable){
         return ResponseEntity.ok(service.listarPets(idOuNome, pageable));
     }
 
-    @GetMapping("/{idOuNome}/{id}")
+    @GetMapping("ong/{idOuNome}/{id}")
     public ResponseEntity<DetalhesPetDTO> detalharPet(@PathVariable String idOuNome, @PathVariable Long id){
         return ResponseEntity.ok(service.detalharPet(idOuNome, id));
     }
