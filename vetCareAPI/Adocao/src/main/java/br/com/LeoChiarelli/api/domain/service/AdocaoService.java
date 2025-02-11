@@ -6,7 +6,7 @@ import br.com.LeoChiarelli.api.domain.dto.ReprovarAdocaoDTO;
 import br.com.LeoChiarelli.api.domain.model.Adocao;
 import br.com.LeoChiarelli.api.domain.repository.IAbrigoRepository;
 import br.com.LeoChiarelli.api.domain.repository.IAdocaoRepository;
-import br.com.LeoChiarelli.api.domain.repository.IAdotanteRepository;
+import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.domain.repository.IPetRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
@@ -26,12 +26,12 @@ public class AdocaoService {
     private IPetRepository petRepository;
 
     @Autowired
-    private IAdotanteRepository adotanteRepository;
+    private ITutorRepository adotanteRepository;
 
     public DetalhesAdocaoDTO solicitar(@Valid CadastrarAdocaoDTO dto) {
         var abrigo = abrigoRepository.findById(dto.idAbrigo()).orElseThrow(() -> new ValidacaoException("Id informado não corresponde à nenhum abrigo"));
         var pet = petRepository.findByAbrigoAndId(abrigo, dto.idPet()).orElseThrow(() -> new ValidacaoException("Pet não encontrado no abrigo informado"));
-        var adotante = adotanteRepository.findByCpf(dto.cpfAdotante()).orElseThrow(() -> new ValidacaoException("Adotante não encotrado"));
+        var adotante = adotanteRepository.findByCpf(dto.cpfAdotante()).orElseThrow(() -> new ValidacaoException("Tutor não encotrado"));
         var adocao = new Adocao(abrigo, pet, adotante);
 
         return new DetalhesAdocaoDTO(adocao);
