@@ -1,19 +1,21 @@
 package br.com.LeoChiarelli.api.domain.model;
 
-import br.com.LeoChiarelli.api.domain.dto.AtualizarInfoAdotanteDTO;
-import br.com.LeoChiarelli.api.domain.dto.CadastrarAdotanteDTO;
+import br.com.LeoChiarelli.api.domain.dto.AtualizarInfoTutorDTO;
+import br.com.LeoChiarelli.api.domain.dto.CadastrarTutorDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "tutores")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Getter
-public class Adotante {
+public class Tutor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +27,7 @@ public class Adotante {
     private String email;
     private Endereco endereco;
 
-    public Adotante(@Valid CadastrarAdotanteDTO dto) {
+    public Tutor(@Valid CadastrarTutorDTO dto) {
         this.nome = dto.nome();
         this.cpf = dto.cpf();
         this.telefone = dto.telefone();
@@ -33,7 +35,7 @@ public class Adotante {
         this.endereco = new Endereco(dto.endereco());
     }
 
-    public void atualizarInfo(@Valid AtualizarInfoAdotanteDTO dto) {
+    public void atualizarInfo(@Valid AtualizarInfoTutorDTO dto) {
         if (dto.telefone() != null) { this.telefone = dto.telefone(); }
         if (dto.email() != null) { this.email = dto.email(); }
         if (dto.endereco() != null) { this.endereco.atualizar(dto.endereco()); }

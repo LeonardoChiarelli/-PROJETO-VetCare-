@@ -4,6 +4,7 @@ import br.com.LeoChiarelli.api.domain.dto.CadastrarPetDTO;
 import jakarta.persistence.*;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ import java.time.Period;
 @Table
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Getter
 public class Pet {
 
