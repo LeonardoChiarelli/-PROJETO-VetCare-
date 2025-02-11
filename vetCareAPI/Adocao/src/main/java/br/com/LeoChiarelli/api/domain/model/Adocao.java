@@ -3,6 +3,7 @@ package br.com.LeoChiarelli.api.domain.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 @Table(name = "adocoes")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Getter
 public class Adocao {
 
@@ -23,7 +25,7 @@ public class Adocao {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "adotante_id")
-    private Adotante adotante;
+    private Tutor tutor;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
@@ -38,9 +40,9 @@ public class Adocao {
 
     private String justificativa;
 
-    public Adocao(Abrigo abrigo, Pet pet, Adotante adotante) {
+    public Adocao(Abrigo abrigo, Pet pet, Tutor tutor) {
         this.dataHora = LocalDateTime.now();
-        this.adotante = adotante;
+        this.tutor = tutor;
         this.pet = pet;
         this.abrigo = abrigo;
         this.status = StatusAdocao.SOLICITADA;
