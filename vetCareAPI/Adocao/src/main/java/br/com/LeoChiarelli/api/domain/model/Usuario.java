@@ -1,6 +1,8 @@
 package br.com.LeoChiarelli.api.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -35,6 +37,13 @@ public class Usuario implements UserDetails {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "perfil_id")
     private Perfil perfil;
+
+    public Usuario(String nome, @NotBlank @Email String email, Perfil perfil, String senhaEncriptada) {
+        this.nome = nome;
+        this.email = email;
+        this.perfil = perfil;
+        this.senha = senhaEncriptada;
+    }
 
     public Boolean isOng() { return this.perfis.stream().anyMatch(Perfil::isOng); }
     public Boolean isTutor() { return this.perfis.stream().anyMatch(Perfil::isTutor); }
