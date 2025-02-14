@@ -4,6 +4,7 @@ import br.com.LeoChiarelli.api.domain.dto.*;
 import br.com.LeoChiarelli.api.domain.model.Abrigo;
 import br.com.LeoChiarelli.api.domain.model.Pet;
 import br.com.LeoChiarelli.api.domain.repository.IAbrigoRepository;
+import br.com.LeoChiarelli.api.domain.repository.IPerfilRepository;
 import br.com.LeoChiarelli.api.domain.repository.IPetRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
@@ -23,12 +24,16 @@ public class AbrigoService {
     @Autowired
     private IPetRepository petRepository;
 
+    @Autowired
+    private IPerfilRepository perfilRepository;
+
     public DetalhesAbrigoDTO cadastrar(CadastrarAbrigoDTO dto) {
 
         boolean jaCadastrado = repository.existsByCnpj(dto.cnpj());
         if (jaCadastrado) { throw new ValidacaoException("Abrigo já cadastrado"); }
 
-        var abrigo = new Abrigo(dto);
+        var perfil = perfilRepository.findById(1L).orElseThrow(() -> new ValidacaoException("Perfil não encontrado"));
+        var abrigo = new Abrigo(dto, perfil);
         repository.save(abrigo);
         return new DetalhesAbrigoDTO(abrigo);
     }

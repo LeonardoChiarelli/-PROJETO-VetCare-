@@ -28,15 +28,19 @@ public class Abrigo {
     private String email;
     private Endereco endereco;
 
+    @JoinColumn(name = "perfil_id")
+    private Perfil perfil_id;
+
     @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL)
     private List<Pet> pets;
 
-    public Abrigo(CadastrarAbrigoDTO dto) {
+    public Abrigo(CadastrarAbrigoDTO dto, Perfil perfil) {
         this.nome = dto.nome();
         this.cnpj = dto.cnpj();
         this.telefone = dto.telefone();
         this.email = dto.email();
         this.endereco = new Endereco(dto.endereco());
+        this.perfil_id = perfil;
     }
 
     public void atualizarInfo(AtualizarAbrigoDTO dto) {
