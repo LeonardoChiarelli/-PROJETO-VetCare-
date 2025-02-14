@@ -65,4 +65,8 @@ public class Pet {
         }
         return Period.between(this.dataNascimento, LocalDate.now()).getYears();
     }
+
+    public void mudaStatus() {
+        this.status = StatusPet.EM_PROCESSO;
+    }
 }
