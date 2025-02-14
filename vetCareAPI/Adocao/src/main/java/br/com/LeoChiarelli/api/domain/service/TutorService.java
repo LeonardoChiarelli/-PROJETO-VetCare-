@@ -4,6 +4,7 @@ import br.com.LeoChiarelli.api.domain.dto.AtualizarInfoTutorDTO;
 import br.com.LeoChiarelli.api.domain.dto.CadastrarTutorDTO;
 import br.com.LeoChiarelli.api.domain.dto.DetalhesTutorDTO;
 import br.com.LeoChiarelli.api.domain.model.Tutor;
+import br.com.LeoChiarelli.api.domain.repository.IPerfilRepository;
 import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
@@ -16,8 +17,12 @@ public class TutorService {
     @Autowired
     private ITutorRepository repository;
 
+    @Autowired
+    private IPerfilRepository perfilRepository;
+
     public DetalhesTutorDTO cadastrar(@Valid CadastrarTutorDTO dto) {
-        var adotante = new Tutor(dto);
+        var perfil = perfilRepository.findById(2L).orElseThrow(() -> new ValidacaoException("Perfil não encontrado"));
+        var adotante = new Tutor(dto, perfil);
         repository.save(adotante);
         return  new DetalhesTutorDTO(adotante);
     }

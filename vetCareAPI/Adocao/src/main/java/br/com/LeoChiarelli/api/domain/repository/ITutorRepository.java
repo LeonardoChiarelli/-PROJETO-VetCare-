@@ -1,6 +1,7 @@
 package br.com.LeoChiarelli.api.domain.repository;
 
 import br.com.LeoChiarelli.api.domain.model.Tutor;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -15,4 +16,8 @@ public interface ITutorRepository extends JpaRepository<Tutor, Long> {
 
     @Modifying
     void deleteByCpf(String cpf);
+
+    boolean findByEmail(@NotBlank @Email String email);
+
+    Tutor getReferenceByEmail(@NotBlank @Email String email);
 }

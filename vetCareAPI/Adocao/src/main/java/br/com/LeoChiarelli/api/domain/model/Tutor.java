@@ -27,12 +27,16 @@ public class Tutor {
     private String email;
     private Endereco endereco;
 
-    public Tutor(@Valid CadastrarTutorDTO dto) {
+    @JoinColumn(name = "perfil_id")
+    private Perfil perfil_id;
+
+    public Tutor(@Valid CadastrarTutorDTO dto, Perfil perfil) {
         this.nome = dto.nome();
         this.cpf = dto.cpf();
         this.telefone = dto.telefone();
         this.email = dto.email();
         this.endereco = new Endereco(dto.endereco());
+        this.perfil_id = perfil;
     }
 
     public void atualizarInfo(@Valid AtualizarInfoTutorDTO dto) {
