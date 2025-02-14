@@ -46,6 +46,7 @@ public class Adocao {
         this.pet = pet;
         this.abrigo = abrigo;
         this.status = StatusAdocao.SOLICITADA;
+        pet.mudaStatus();
     }
 
     public void aprovar() {
