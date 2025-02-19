@@ -2,7 +2,7 @@ spring:
   application:
     name: Adocao
   datasource:
-    url: ${VETCARE_ADOCOES_URL}
+    url:  ${VETCARE_ADOCOES_URL}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   jpa:
