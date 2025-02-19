@@ -41,8 +41,8 @@ public class UsuarioService implements UserDetailsService {
     }
 
     public void cadastrar(@Valid CadastrarUsuarioDTO dto) {
-        var existeAbrigo = abrigoRepository.findByEmail(dto.email());
-        var existeTutor = tutorRepository.findByEmail(dto.email());
+        var existeAbrigo = abrigoRepository.existsByEmail(dto.email());
+        var existeTutor = tutorRepository.existsByEmail(dto.email());
         var senhaEncriptada = passwordEncoder.encode(dto.senha());
 
         if (existeAbrigo){
