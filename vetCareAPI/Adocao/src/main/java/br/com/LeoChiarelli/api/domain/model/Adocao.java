@@ -31,7 +31,7 @@ public class Adocao {
     @JoinColumn(name = "pet_id")
     private Pet pet;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "abrigo_id")
     private Abrigo abrigo;
 
@@ -46,11 +46,12 @@ public class Adocao {
         this.pet = pet;
         this.abrigo = abrigo;
         this.status = StatusAdocao.SOLICITADA;
-        pet.mudaStatus();
+        pet.mudaStatus(StatusPet.EM_PROCESSO);
     }
 
-    public void aprovar() {
+    public void aprovar(Pet pet) {
         this.status = StatusAdocao.APROVADA;
+        pet.mudaStatus(StatusPet.ADOTADO);
     }
 
     public void reprovar(@NotBlank String justificativa) {

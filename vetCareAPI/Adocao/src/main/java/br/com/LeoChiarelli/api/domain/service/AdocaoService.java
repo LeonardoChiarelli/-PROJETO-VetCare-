@@ -39,7 +39,8 @@ public class AdocaoService {
 
     public void aprovar(Long id) {
         var adocao = repository.findById(id).orElseThrow(() -> new ValidacaoException("Adoção não encontrada"));
-        adocao.aprovar();
+        var pet = adocao.getPet();
+        adocao.aprovar(pet);
     }
 
     public String reprovar(@Valid ReprovarAdocaoDTO dto) {
