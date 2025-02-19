@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "abrigos")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -26,10 +26,14 @@ public class Abrigo {
     private String cnpj;
     private String telefone;
     private String email;
+
+    @Embedded
     private Endereco endereco;
 
+    @ElementCollection(targetClass = Perfil.class)
+    @ManyToOne
     @JoinColumn(name = "perfil_id")
-    private Perfil perfil_id;
+    private Perfil perfil;
 
     @OneToMany(mappedBy = "abrigo", cascade = CascadeType.ALL)
     private List<Pet> pets;
@@ -40,7 +44,7 @@ public class Abrigo {
         this.telefone = dto.telefone();
         this.email = dto.email();
         this.endereco = new Endereco(dto.endereco());
-        this.perfil_id = perfil;
+        this.perfil = perfil;
     }
 
     public void atualizarInfo(AtualizarAbrigoDTO dto) {

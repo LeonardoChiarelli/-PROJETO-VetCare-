@@ -14,7 +14,7 @@ public interface IAbrigoRepository extends JpaRepository<Abrigo, Long> {
 
     Optional<Abrigo> findByNome(String idOuNome);
 
-    boolean findByEmail(@NotBlank @Email String email);
-
     Abrigo getReferenceByEmail(@NotBlank @Email String email);
+
+    Boolean existsByEmail(@NotBlank @Email String email);
 }

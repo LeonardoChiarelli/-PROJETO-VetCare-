@@ -57,7 +57,7 @@ public class AbrigoService {
     public Page<ListaPetsDTO> listarPets(String idOuNome, Pageable pageable) {
         var abrigo = buscarAbrigo(idOuNome);
 
-        return petRepository.findByAbrigoAndStatusDisponivel(abrigo, pageable).map(ListaPetsDTO::new);
+        return petRepository.findAllByAbrigoAndStatusDisponivel(abrigo.getId(), pageable).map(ListaPetsDTO::new);
     }
 
     public DetalhesPetDTO detalharPet(String idOuNome, Long id) {
@@ -65,11 +65,11 @@ public class AbrigoService {
         return new DetalhesPetDTO(petRepository.findByAbrigoAndId(abrigo, id).orElseThrow(() -> new ValidacaoException("Pet não encontrado no abrigo informado")));
     }
 
-    public DetalhesPetDTO cadastrarPet(@Valid CadastrarPetDTO dto, String idOuNome) {
+    public Pet cadastrarPet(@Valid CadastrarPetDTO dto, String idOuNome) {
         var abrigo = buscarAbrigo(idOuNome);
         var pet = new Pet(dto, abrigo);
         petRepository.save(pet);
-        return new DetalhesPetDTO(pet);
+        return pet;
     }
 
     public Abrigo buscarAbrigo(String idOuNome){

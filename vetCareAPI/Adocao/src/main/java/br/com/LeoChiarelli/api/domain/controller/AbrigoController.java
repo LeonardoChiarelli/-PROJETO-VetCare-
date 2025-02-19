@@ -40,7 +40,7 @@ public class AbrigoController {
         return ResponseEntity.ok(service.listar(pageable));
     }
 
-    @GetMapping("/tutor/{idOuNome")
+    @GetMapping({"/ong/{idOuNome}", "/tutor/{idOuNome}"})
     public ResponseEntity<DetalhesAbrigoDTO> detalharAbrigo(@PathVariable String idOuNome){
         return ResponseEntity.ok(service.detalhar(idOuNome));
     }
@@ -50,9 +50,9 @@ public class AbrigoController {
     public ResponseEntity<DetalhesPetDTO> cadastrarPetNoAbrigo(@RequestBody @Valid CadastrarPetDTO dto, @PathVariable String idOuNome, UriComponentsBuilder uriBuilder){
         var pet = service.cadastrarPet(dto, idOuNome);
 
-        var uri = uriBuilder.path("/{idOuNome}/{id}").buildAndExpand(idOuNome, dto.id()).toUri();
+        var uri = uriBuilder.path("/{idOuNome}/{id}").buildAndExpand(idOuNome, pet.getId()).toUri();
 
-        return ResponseEntity.created(uri).body(pet);
+        return ResponseEntity.created(uri).body(new DetalhesPetDTO(pet));
     }
 
     @GetMapping({"/ong/{idOuNome}/pets", "/tutor/{idOuNome}/pets"})
@@ -60,7 +60,7 @@ public class AbrigoController {
         return ResponseEntity.ok(service.listarPets(idOuNome, pageable));
     }
 
-    @GetMapping("ong/{idOuNome}/{id}")
+    @GetMapping({"/ong/{idOuNome}/{id}", "/tutor/{idOuNome}/{id}"})
     public ResponseEntity<DetalhesPetDTO> detalharPet(@PathVariable String idOuNome, @PathVariable Long id){
         return ResponseEntity.ok(service.detalharPet(idOuNome, id));
     }
