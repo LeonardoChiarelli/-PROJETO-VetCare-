@@ -42,7 +42,8 @@ public class Pet {
     private StatusPet status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    private Abrigo abrigo_id;
+    @JoinColumn(name = "abrigo_id")
+    private Abrigo abrigo;
 
     @OneToOne(mappedBy = "pet", fetch = FetchType.LAZY)
     private Adocao adocao_id;
@@ -55,7 +56,7 @@ public class Pet {
         this.porte = dto.porte();
         this.descricao = dto.descricao();
         this.status = StatusPet.DISPONIVEL;
-        this.abrigo_id = abrigo;
+        this.abrigo = abrigo;
     }
 
     // Getter dinâmico para calcular a idade corretamente
@@ -66,7 +67,7 @@ public class Pet {
         return Period.between(this.dataNascimento, LocalDate.now()).getYears();
     }
 
-    public void mudaStatus() {
-        this.status = StatusPet.EM_PROCESSO;
+    public void mudaStatus(StatusPet status) {
+        this.status = status;
     }
 }

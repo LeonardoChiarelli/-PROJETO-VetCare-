@@ -1,12 +1,14 @@
 package br.com.LeoChiarelli.api.domain.service;
 
-import br.com.LeoChiarelli.api.domain.dto.*;
+import br.com.LeoChiarelli.api.domain.dto.AtualizarDadosPetDTO;
+import br.com.LeoChiarelli.api.domain.dto.CadastrarPetDTO;
+import br.com.LeoChiarelli.api.domain.dto.DetalhesPetDTO;
+import br.com.LeoChiarelli.api.domain.dto.ListaPetsDTO;
 import br.com.LeoChiarelli.api.domain.model.Pet;
 import br.com.LeoChiarelli.api.domain.repository.IPetRepository;
 import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.domain.repository.IVeterinarioRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -12,12 +12,14 @@ import java.util.Optional;
 
 public interface IPetRepository extends JpaRepository<Pet, Long> {
 
-    @Query("SELECT p FROM Pet p WHERE p.abrigo_id = :abrigo AND  p.status = 'DISPONIVEL' ")
-    Page<Pet> findByAbrigoAndStatusDisponivel(Abrigo abrigo, Pageable pageable);
+    @Query("SELECT p FROM Pet p WHERE p.abrigo.id = :abrigo AND  p.status = 'DISPONIVEL' ")
+    Page<Pet> findAllByAbrigoAndStatusDisponivel(Long abrigo, Pageable pageable);
 
     Optional<Pet> findByAbrigoAndId(Abrigo abrigo, Long id);
 
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Pet p WHERE p.id = :id AND p.status = 'DISPONIVEL'")
     Boolean existsByIdAndStatusDisponivel(@NotNull Long id);
 
+    @Query("SELECT CASE WHEN COUNT(p) > 0 THEN true ELSE false END FROM Pet p WHERE p.id = :id AND p.status = 'EM_PROCESSO'")
     Boolean existsByIdAndStatusEmProcesso(@NotNull Long id);
 }
