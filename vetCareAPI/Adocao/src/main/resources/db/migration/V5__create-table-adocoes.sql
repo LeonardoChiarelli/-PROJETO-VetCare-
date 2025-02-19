@@ -9,7 +9,7 @@ create table adocoes(
     justificativa varchar(255),
 
     primary key(id),
-    constraint fk_adoces_adotante_id foreign key(adotante_id) references adotantes(id)
-    constraint fk_adoces_pet_id foreign key(pet_id) references pets(id)
+    constraint fk_adoces_adotante_id foreign key(adotante_id) references tutores(id),
+    constraint fk_adoces_pet_id foreign key(pet_id) references pets(id),
     constraint fk_adoces_abrigo_id foreign key(abrigo_id) references abrigos(id)
 );
