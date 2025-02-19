@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-public class SecurityConfigurations {
+public class SecurityConfiguration {
 
     @Autowired
     private SecurityFilter securityFilter;
@@ -30,7 +30,7 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(r -> {
                     r.requestMatchers("/adocoes/ong/**").hasRole("ONG");
                     r.requestMatchers("/adocoes/tutor/**").hasRole("TUTOR");
-                    r.requestMatchers(HttpMethod.POST, "/adocoes/abrigo/cadastrar", "/adocoes/cadastrar", "/adocoes/login").permitAll();
+                    r.requestMatchers(HttpMethod.POST, "/adocoes/abrigo/cadastrar", "/adocoes/tutores/cadastrar", "/adocoes/cadastrar", "/adocoes/login").permitAll();
                     r.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     r.anyRequest().authenticated();
                 })
