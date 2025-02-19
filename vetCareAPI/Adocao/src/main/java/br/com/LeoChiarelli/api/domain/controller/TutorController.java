@@ -18,7 +18,7 @@ public class TutorController {
     @Autowired
     private TutorService service;
 
-    @PostMapping
+    @PostMapping("/tutores/cadastrar")
     @Transactional
     public ResponseEntity<DetalhesTutorDTO> cadastrar(@RequestBody @Valid CadastrarTutorDTO dto, UriComponentsBuilder uriBuilder){
         var adotante = service.cadastrar(dto);

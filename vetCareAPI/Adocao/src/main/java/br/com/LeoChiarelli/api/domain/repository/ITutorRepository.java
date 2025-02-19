@@ -17,7 +17,7 @@ public interface ITutorRepository extends JpaRepository<Tutor, Long> {
     @Modifying
     void deleteByCpf(String cpf);
 
-    boolean findByEmail(@NotBlank @Email String email);
-
     Tutor getReferenceByEmail(@NotBlank @Email String email);
+
+    Boolean existsByEmail(@NotBlank @Email String email);
 }

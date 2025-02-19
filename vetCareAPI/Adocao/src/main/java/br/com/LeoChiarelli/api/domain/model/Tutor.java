@@ -27,8 +27,10 @@ public class Tutor {
     private String email;
     private Endereco endereco;
 
+    @ElementCollection(targetClass = Perfil.class)
+    @ManyToOne
     @JoinColumn(name = "perfil_id")
-    private Perfil perfil_id;
+    private Perfil perfil;
 
     public Tutor(@Valid CadastrarTutorDTO dto, Perfil perfil) {
         this.nome = dto.nome();
@@ -36,7 +38,7 @@ public class Tutor {
         this.telefone = dto.telefone();
         this.email = dto.email();
         this.endereco = new Endereco(dto.endereco());
-        this.perfil_id = perfil;
+        this.perfil = perfil;
     }
 
     public void atualizarInfo(@Valid AtualizarInfoTutorDTO dto) {
