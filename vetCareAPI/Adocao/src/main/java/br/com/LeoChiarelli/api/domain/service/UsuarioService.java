@@ -1,13 +1,12 @@
 package br.com.LeoChiarelli.api.domain.service;
 
 import br.com.LeoChiarelli.api.domain.dto.CadastrarUsuarioDTO;
-import br.com.LeoChiarelli.api.domain.dto.EfetuarLoginDTO;
-import br.com.LeoChiarelli.api.domain.model.Perfil;
 import br.com.LeoChiarelli.api.domain.model.Usuario;
 import br.com.LeoChiarelli.api.domain.repository.IAbrigoRepository;
 import br.com.LeoChiarelli.api.domain.repository.IPerfilRepository;
 import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.domain.repository.IUsuarioRepository;
+import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -48,20 +47,17 @@ public class UsuarioService implements UserDetailsService {
         if (existeAbrigo){
             var abrigo = abrigoRepository.getReferenceByEmail(dto.email());
 
-            var perfil = buscarPerfil(1L);
+            var perfil = perfilRepository.findByNome("ROLE_ONG")
+                    .orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
             repository.save(new Usuario(abrigo.getNome(), dto.email(), perfil, senhaEncriptada));
         }
 
         if (existeTutor){
             var tutor = tutorRepository.getReferenceByEmail(dto.email());
 
-            var perfil = buscarPerfil(2L);
+            var perfil = perfilRepository.findByNome("ROLE_TUTOR").orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
             repository.save(new Usuario(tutor.getNome(), dto.email(), perfil, senhaEncriptada));
         }
-    }
-
-    public Perfil buscarPerfil(Long id){
-        return perfilRepository.getReferenceById(id);
     }
 
 }
