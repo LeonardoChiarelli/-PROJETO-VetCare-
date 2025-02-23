@@ -1,6 +1,9 @@
 package br.com.LeoChiarelli.api.domain.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.IdClass;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -16,7 +19,6 @@ import lombok.NoArgsConstructor;
 public class UsuarioPerfil {
 
     @Id
-    @Column(name = "usuario_id")
     private Long idUsuario;
 
     @Id
