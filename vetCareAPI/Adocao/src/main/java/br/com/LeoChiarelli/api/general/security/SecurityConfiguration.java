@@ -29,7 +29,9 @@ public class SecurityConfiguration {
                 .sessionManagement(sm -> sm.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(r -> {
                     r.requestMatchers("/adocoes/ong/**").hasRole("ONG");
+                    r.requestMatchers("/adocoes/adotar/ong/**").hasRole("ONG");
                     r.requestMatchers("/adocoes/tutor/**").hasRole("TUTOR");
+                    r.requestMatchers("/adocoes/adotar/tutor/**").hasRole("TUTOR");
                     r.requestMatchers(HttpMethod.POST, "/adocoes/abrigo/cadastrar", "/adocoes/tutores/cadastrar", "/adocoes/cadastrar", "/adocoes/login").permitAll();
                     r.requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll();
                     r.anyRequest().authenticated();
