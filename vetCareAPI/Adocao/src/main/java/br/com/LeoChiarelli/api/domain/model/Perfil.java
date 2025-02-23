@@ -26,6 +26,7 @@ public class Perfil implements GrantedAuthority {
 
     @Override
     public String getAuthority() {
-        return nome;
+        System.out.println("Autoridade gerada: ROLE_" + nome);  // Log de debug
+        return "ROLE_" + nome;
     }
 }

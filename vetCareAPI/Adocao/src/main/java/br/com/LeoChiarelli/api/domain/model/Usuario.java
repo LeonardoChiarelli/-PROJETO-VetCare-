@@ -50,6 +50,8 @@ public class Usuario implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("Perfis carregados para " + this.email + ": " + this.perfis);
+        System.out.println("Perfis: " + this.perfis); // Para debug
         return this.perfis;
     }
 
