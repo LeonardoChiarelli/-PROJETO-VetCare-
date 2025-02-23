@@ -1,12 +1,14 @@
 package br.com.LeoChiarelli.api.domain.controller;
 
-import br.com.LeoChiarelli.api.domain.dto.AtualizarInfoTutorDTO;
-import br.com.LeoChiarelli.api.domain.dto.CadastrarTutorDTO;
-import br.com.LeoChiarelli.api.domain.dto.DetalhesTutorDTO;
+import br.com.LeoChiarelli.api.domain.dto.*;
+import br.com.LeoChiarelli.api.domain.service.AbrigoService;
 import br.com.LeoChiarelli.api.domain.service.TutorService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -17,6 +19,9 @@ public class TutorController {
 
     @Autowired
     private TutorService service;
+
+    @Autowired
+    private AbrigoService abrigoService;
 
     @PostMapping("/tutores/cadastrar")
     @Transactional
@@ -34,9 +39,24 @@ public class TutorController {
         return ResponseEntity.ok(service.atualizar(dto));
     }
 
-    @GetMapping("/ong/{cpf}")
-    public ResponseEntity<DetalhesTutorDTO> detalharAdotante(@PathVariable String cpf){
-        return ResponseEntity.ok(service.detalhar(cpf));
+    @GetMapping("/tutor/listar")
+    public ResponseEntity<Page<ListaAbrigosDTO>> listarAbrigos(@PageableDefault(sort = {"nome"}) Pageable pageable){
+        return ResponseEntity.ok(abrigoService.listar(pageable));
+    }
+
+    @GetMapping("/tutor/{idOuNome}/pets")
+    public ResponseEntity<Page<ListaPetsDTO>> listarPetsDoAbrigo(@PathVariable String idOuNome, @PageableDefault(sort = {"nome"}) Pageable pageable){
+        return ResponseEntity.ok(abrigoService.listarPets(idOuNome, pageable));
+    }
+
+    @GetMapping("/tutor/{idOuNome}")
+    public ResponseEntity<DetalhesAbrigoDTO> detalharAbrigo(@PathVariable String idOuNome){
+        return ResponseEntity.ok(abrigoService.detalhar(idOuNome));
+    }
+
+    @GetMapping("/tutor/{idOuNome}/{id}")
+    public ResponseEntity<DetalhesPetDTO> detalharPet(@PathVariable String idOuNome, @PathVariable Long id){
+        return ResponseEntity.ok(abrigoService.detalharPet(idOuNome, id));
     }
 
     @DeleteMapping("/tutor/{cpf}")
@@ -46,6 +66,5 @@ public class TutorController {
 
         return ResponseEntity.ok("Tutor excluido");
     }
-
 
 }
