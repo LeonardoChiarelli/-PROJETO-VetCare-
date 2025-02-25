@@ -9,7 +9,7 @@ public record AtualizarAbrigoDTO(
         @NotNull
         Long id,
 
-        @Pattern(regexp = "\\d{11,18}")
+        @Pattern(regexp = "\\d{11}")
         String telefone,
 
         @Email

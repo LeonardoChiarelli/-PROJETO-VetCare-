@@ -41,7 +41,7 @@ public class AbrigoController {
         return ResponseEntity.ok(service.atualizar(dto));
     }
 
-    @GetMapping("/ong/{idOuNome}")
+    @GetMapping("/ong/abrigo/{idOuNome}")
     public ResponseEntity<DetalhesAbrigoDTO> detalharAbrigo(@PathVariable String idOuNome){
         return ResponseEntity.ok(service.detalhar(idOuNome));
     }
@@ -67,7 +67,7 @@ public class AbrigoController {
     }
 
     @GetMapping("/ong/{cpf}")
-    public ResponseEntity<DetalhesTutorDTO> detalharAdotante(@PathVariable String cpf){
+    public ResponseEntity<DetalhesTutorDTO> detalharTutor(@PathVariable String cpf){
         return ResponseEntity.ok(tutorService.detalhar(cpf));
     }
 
