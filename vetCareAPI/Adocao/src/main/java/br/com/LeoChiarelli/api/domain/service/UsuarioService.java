@@ -55,7 +55,8 @@ public class UsuarioService implements UserDetailsService {
         if (existeTutor){
             var tutor = tutorRepository.getReferenceByEmail(dto.email());
 
-            var perfil = perfilRepository.findByNome("ROLE_TUTOR").orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
+            var perfil = perfilRepository.findByNome("ROLE_TUTOR")
+                    .orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
             repository.save(new Usuario(tutor.getNome(), dto.email(), perfil, senhaEncriptada));
         }
     }
