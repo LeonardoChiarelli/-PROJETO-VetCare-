@@ -36,6 +36,7 @@ public class Adocao {
     private Abrigo abrigo;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "status_adocao")
     private StatusAdocao status;
 
     private String justificativa;
