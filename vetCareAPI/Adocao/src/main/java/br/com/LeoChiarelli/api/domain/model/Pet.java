@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 @Entity
-@Table
+@Table(name = "pets")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -54,6 +54,8 @@ public class Pet {
         this.idade = getIdade();
         this.especie = dto.especie();
         this.porte = dto.porte();
+        this.peso = dto.peso();
+        this.cor = dto.cor();
         this.descricao = dto.descricao();
         this.status = StatusPet.DISPONIVEL;
         this.abrigo = abrigo;

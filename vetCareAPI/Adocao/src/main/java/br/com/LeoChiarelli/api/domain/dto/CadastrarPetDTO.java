@@ -2,7 +2,7 @@ package br.com.LeoChiarelli.api.domain.dto;
 
 import br.com.LeoChiarelli.api.domain.model.Especie;
 import br.com.LeoChiarelli.api.domain.model.Porte;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -15,7 +15,7 @@ public record CadastrarPetDTO(
         String nome,
 
         @NotNull
-        @JsonProperty("dd/MM/yyyy")
+        @JsonFormat(pattern = "dd/MM/yyyy")
         LocalDate dataNascimento,
 
         @NotNull
