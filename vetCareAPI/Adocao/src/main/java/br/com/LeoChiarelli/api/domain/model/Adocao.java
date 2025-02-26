@@ -55,8 +55,9 @@ public class Adocao {
         pet.mudaStatus(StatusPet.ADOTADO);
     }
 
-    public void reprovar(@NotBlank String justificativa) {
+    public void reprovar(@NotBlank String justificativa, Pet pet) {
         this.status = StatusAdocao.NEGADA;
         this.justificativa = justificativa;
+        pet.mudaStatus(StatusPet.DISPONIVEL);
     }
 }

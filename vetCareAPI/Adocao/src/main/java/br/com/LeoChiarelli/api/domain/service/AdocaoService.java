@@ -6,12 +6,15 @@ import br.com.LeoChiarelli.api.domain.dto.ReprovarAdocaoDTO;
 import br.com.LeoChiarelli.api.domain.model.Adocao;
 import br.com.LeoChiarelli.api.domain.repository.IAbrigoRepository;
 import br.com.LeoChiarelli.api.domain.repository.IAdocaoRepository;
-import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.domain.repository.IPetRepository;
+import br.com.LeoChiarelli.api.domain.repository.ITutorRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
+import br.com.LeoChiarelli.api.general.infra.strategies.IStrategy;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class AdocaoService {
@@ -28,11 +31,18 @@ public class AdocaoService {
     @Autowired
     private ITutorRepository adotanteRepository;
 
+    @Autowired
+    private List<IStrategy> validadores;
+
     public DetalhesAdocaoDTO solicitar(@Valid CadastrarAdocaoDTO dto) {
         var abrigo = abrigoRepository.findById(dto.idAbrigo()).orElseThrow(() -> new ValidacaoException("Id informado não corresponde à nenhum abrigo"));
         var pet = petRepository.findByAbrigoAndId(abrigo, dto.idPet()).orElseThrow(() -> new ValidacaoException("Pet não encontrado no abrigo informado"));
         var adotante = adotanteRepository.findByCpf(dto.cpfAdotante()).orElseThrow(() -> new ValidacaoException("Tutor não encotrado"));
         var adocao = new Adocao(abrigo, pet, adotante);
+
+        validadores.forEach(v -> v.validar(dto));
+
+        repository.save(adocao);
 
         return new DetalhesAdocaoDTO(adocao);
     }
@@ -45,7 +55,8 @@ public class AdocaoService {
 
     public String reprovar(@Valid ReprovarAdocaoDTO dto) {
         var adocao = repository.findById(dto.id()).orElseThrow(() -> new ValidacaoException("Adoção não encontrada"));
-        adocao.reprovar(dto.justificativa());
+        var pet = adocao.getPet();
+        adocao.reprovar(dto.justificativa(), pet);
         return adocao.getJustificativa();
     }
 }
