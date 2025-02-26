@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UsuarioService implements UserDetailsService {
 
@@ -49,7 +51,7 @@ public class UsuarioService implements UserDetailsService {
 
             var perfil = perfilRepository.findByNome("ROLE_ONG")
                     .orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
-            repository.save(new Usuario(abrigo.getNome(), dto.email(), perfil, senhaEncriptada));
+            repository.save(new Usuario(abrigo.getNome(), dto.email(), List.of(perfil), senhaEncriptada));
         }
 
         if (existeTutor){
@@ -57,7 +59,7 @@ public class UsuarioService implements UserDetailsService {
 
             var perfil = perfilRepository.findByNome("ROLE_TUTOR")
                     .orElseThrow(() -> new ValidacaoException("Perfil ROLE_ONG não encontrado"));
-            repository.save(new Usuario(tutor.getNome(), dto.email(), perfil, senhaEncriptada));
+            repository.save(new Usuario(tutor.getNome(), dto.email(), List.of(perfil), senhaEncriptada));
         }
     }
 

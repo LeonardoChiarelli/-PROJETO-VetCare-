@@ -34,14 +34,10 @@ public class Usuario implements UserDetails {
     @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     private List<Perfil> perfis = new ArrayList<>();
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "perfil_id")
-    private Perfil perfil;
-
-    public Usuario(String nome, @NotBlank @Email String email, Perfil perfil, String senhaEncriptada) {
+    public Usuario(String nome, @NotBlank @Email String email, List<Perfil> perfil, String senhaEncriptada) {
         this.nome = nome;
         this.email = email;
-        this.perfil = perfil;
+        this.perfis = perfil;
         this.senha = senhaEncriptada;
     }
 
@@ -51,7 +47,9 @@ public class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         System.out.println("Perfis carregados para " + this.email + ": " + this.perfis);
-        System.out.println("Perfis: " + this.perfis); // Para debug
+        if (this.perfis.isEmpty()) {
+            System.out.println("⚠️ Nenhum perfil foi carregado!");
+        }
         return this.perfis;
     }
 
