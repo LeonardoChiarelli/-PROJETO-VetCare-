@@ -1,6 +1,8 @@
 package br.com.LeoChiarelli.api.domain.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -32,6 +34,13 @@ public class Usuario implements UserDetails {
     @JoinTable(name = "usuarios_perfis", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "perfil_id"))
     @Column(name = "perfil_id")
     private List<Perfil> perfis = new ArrayList<>();
+
+    public Usuario(@NotBlank @Email String email, @NotBlank String nome, List<Perfil> perfil, String senhaEncriptada) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senhaEncriptada;
+        this.perfis = perfil;
+    }
 
     public Boolean isAdmin(){
         return this.perfis.stream().anyMatch(Perfil::isAdmin);
