@@ -33,7 +33,7 @@ O **VetCareAPI** é uma aplicação backend desenvolvida com Java e Spring Boot,
 
 ## 🧪 Tecnologias e Ferramentas
 
-- **Java 17**
+- **Java 21**
 - **Spring Boot**
 - **Spring Data JPA**
 - **MySQL**
@@ -62,7 +62,7 @@ Cada módulo segue boas práticas de arquitetura RESTful, com separação clara 
 ## 🚀 Como Executar o Projeto
 
 ### Pré-requisitos
-- Java 17 instalado
+- Java 21 instalado
 - MySQL em execução
 - Maven instalado
 
