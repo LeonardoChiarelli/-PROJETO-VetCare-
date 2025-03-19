@@ -21,29 +21,29 @@ public class ProdutoController {
     @Autowired
     private ProdutoService service;
 
-    @PostMapping("/admin/cadastrar")
+    @PostMapping("/admin/produto/cadastrar")
     @Transactional
     public ResponseEntity<DetalhesProdutoDTO> cadastrarProduto(@RequestBody @Valid CadastrarProdutoDTO dto, UriComponentsBuilder uriBuilder){
         var produto = service.cadastrar(dto);
 
-        var uri = uriBuilder.path("/produtos/{id}").buildAndExpand(dto.id()).toUri();
+        var uri = uriBuilder.path("/admin/produtos/{id}").buildAndExpand(dto.id()).toUri();
 
         return ResponseEntity.created(uri).body(new DetalhesProdutoDTO(produto));
     }
 
-    @GetMapping("/produtos")
+    @GetMapping({"/admin/produtos", "/comprador/produtos"})
     public ResponseEntity<Page<ListaProdutosDTO>> listarProdutos(@PageableDefault(sort = {"nome"}) Pageable pageable){
         return ResponseEntity.ok(service.listar(pageable));
     }
 
-    @GetMapping("/produtos/{id}")
+    @GetMapping({"/admin/produtos/{id}", "/comprador/produtos/{id}"})
     public ResponseEntity<DetalhesProdutoDTO> detalharProduto(@PathVariable Long id){
         var produto = service.detalhar(id);
 
         return ResponseEntity.ok(new DetalhesProdutoDTO(produto));
     }
 
-    @PatchMapping("/admin/reativar/{id}")
+    @PatchMapping("/admin/produto/{id}/reativar")
     @Transactional
     public ResponseEntity<String> reativarProduto(@PathVariable Long id){
         service.reativar(id);
@@ -51,7 +51,7 @@ public class ProdutoController {
         return ResponseEntity.ok("Produto reativado");
     }
 
-    @DeleteMapping("/admin/desativar/{id}")
+    @DeleteMapping("/admin/produto/{id}/desativar")
     @Transactional
     public ResponseEntity<String> desativarProduto(@PathVariable Long id){
         service.desativar(id);

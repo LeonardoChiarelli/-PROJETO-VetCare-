@@ -1,8 +1,6 @@
 package br.com.LeoChiarelli.api.domain.model;
 
-import br.com.LeoChiarelli.api.domain.dto.CadastrarPedidoDTO;
 import jakarta.persistence.*;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "pedidos")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -24,18 +22,19 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "data")
     private LocalDateTime dataPedido;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "pedido")
     private List<ItemPedido> itens = new ArrayList<>();
 
-    public Pedido(ArrayList<ItemPedido> itens) {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    public Pedido(ArrayList<ItemPedido> itens, Usuario usuario) {
         this.dataPedido = LocalDateTime.now();
         this.itens = itens;
+        this.usuario = usuario;
     }
-
-    // @ManyToOne
-    // private Usuario usuarios;
 
 }

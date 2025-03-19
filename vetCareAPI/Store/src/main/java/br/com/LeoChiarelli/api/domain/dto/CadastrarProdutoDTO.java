@@ -19,6 +19,9 @@ public record CadastrarProdutoDTO(
         Categoria categoria,
 
         @NotNull
-        BigDecimal preco
+        BigDecimal preco,
+
+        @NotNull
+        Integer quantidade
 ) {
 }

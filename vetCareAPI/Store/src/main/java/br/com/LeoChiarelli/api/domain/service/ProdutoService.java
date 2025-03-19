@@ -2,7 +2,9 @@ package br.com.LeoChiarelli.api.domain.service;
 
 import br.com.LeoChiarelli.api.domain.dto.CadastrarProdutoDTO;
 import br.com.LeoChiarelli.api.domain.dto.ListaProdutosDTO;
+import br.com.LeoChiarelli.api.domain.model.Estoque;
 import br.com.LeoChiarelli.api.domain.model.Produto;
+import br.com.LeoChiarelli.api.domain.repository.IEstoqueRepository;
 import br.com.LeoChiarelli.api.domain.repository.IProdutoRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class ProdutoService {
     @Autowired
     private IProdutoRepository repository;
 
+    @Autowired
+    private IEstoqueRepository estoqueRepository;
+
     public Produto cadastrar(CadastrarProdutoDTO dto) {
 
         var produtoExistente = repository.existsByNomeAndDescricao(dto.nome(), dto.descricao());
@@ -26,6 +31,10 @@ public class ProdutoService {
 
         var produto = new Produto(dto);
         repository.save(produto);
+
+
+        var produtoEstoque = new Estoque(produto, dto.quantidade());
+        estoqueRepository.save(produtoEstoque);
 
         return produto;
     }
