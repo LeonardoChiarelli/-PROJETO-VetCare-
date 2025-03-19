@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "estoques")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -27,6 +27,11 @@ public class Estoque {
 
     @Version
     private Integer versao;
+
+    public Estoque(Produto produto, @NotNull Integer quantidade) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+    }
 
     public void atualizarEstoque(Integer quantidade){
         this.quantidade += quantidade;

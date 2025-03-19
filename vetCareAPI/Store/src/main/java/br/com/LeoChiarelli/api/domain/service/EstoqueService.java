@@ -8,7 +8,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EstoqueService {
 
     @Autowired
@@ -19,8 +21,8 @@ public class EstoqueService {
     }
 
     public void atualizarEstoque(@Valid AtualizarEstoqueDTO dto) {
-        var produtoExistente = repository.existsByIdProduto(dto.idProduto());
-        var estoque = repository.findByProdutoId(dto.idProduto());
+        var produtoExistente = repository.existsByProduto_Id(dto.idProduto());
+        var estoque = repository.findByProduto_Id(dto.idProduto());
 
         if (!produtoExistente | !estoque.getProduto().isAtivo()) { throw new ValidacaoException("Produto não encontrado no estoque ou não está ativo"); }
 

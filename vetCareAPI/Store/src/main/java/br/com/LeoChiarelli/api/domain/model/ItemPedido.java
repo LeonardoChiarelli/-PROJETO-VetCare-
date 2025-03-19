@@ -22,15 +22,18 @@ public class ItemPedido {
 
     @Setter
     @ManyToOne
+    @JoinColumn(name = "pedido_id")
     private Pedido pedido;
 
     @ManyToOne
+    @JoinColumn(name = "produto_id")
     private Produto produto;
 
     private Integer quantidade;
-    private BigDecimal precoUnidade;
+    private BigDecimal precoUnitario;
 
-    public ItemPedido(Produto produto, @NotNull @Min(1) Integer quantidade) {
+    public ItemPedido(Pedido pedido, Produto produto, @NotNull @Min(1) Integer quantidade) {
+        this.pedido = pedido;
         this.produto = produto;
         this.quantidade = quantidade;
     }
