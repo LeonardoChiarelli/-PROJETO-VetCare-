@@ -1,58 +1,99 @@
-# VetCare+
-## Descrição
-VetCare+ é uma aplicação para gestão de consultórios veterinários e serviços relacionados ao cuidado com animais de estimação. A plataforma oferece funcionalidades voltadas para profissionais veterinários, ONGs de adoção de pets e donos de animais, promovendo uma experiência completa e integrada.
-## Funcionalidades Principais
-- **Gestão Veterinária**
-  - Agendamento de consultas.
-  - Histórico médico dos pets.
-  - Teleconsultas com integração de pagamentos.
-- **Adoção de Pets**
-  - Listagem de pets disponíveis para adoção.
-  - Comunicação com ONGs.
-  - Agendamento de visitas e acompanhamento do processo de adoção.
-- **Venda de Produtos**
-  - Loja virtual de produtos para pets.
-  - Carrinho de compras e sistema de fidelidade.
-  - Rastreamento de pedidos e gestão de pagamentos.
-## Tecnologias Utilizadas
-### Backend
-- **Linguagem:** Java
-- **Framework:** Spring Boot
-- **Banco de Dados:** MySQL
-- **ORM:** Hibernate
-### Frontend
-- **Framework:** React Native
-- **Estilo:** Tailwind CSS (ou Styled Components)
-### Outras Tecnologias
-- Integração com APIs externas (pagamentos, geolocalização, notificações).
-- Firebase para envio de notificações.
-## Estrutura do Projeto
-VetCare+ ├── backend │ ├── src │ │ ├── main │ │ │ ├── java/com/vetcare │ │ │ │ ├── controllers │ │ │ │ ├── services │ │ │ │ ├── models │ │ │ │ ├── repositories │ │ └── application.properties │ └── pom.xml ├── frontend │ ├── src │ │ ├── components │ │ ├── screens │ │ ├── services │ │ └── assets │ ├── package.json ├── README.md └── docs ├── wireframes └── api-documentation.md
-## Como Executar
+# VetCareAPI
+
+## 📋 Descrição do Projeto
+
+O **VetCareAPI** é uma aplicação backend desenvolvida com Java e Spring Boot, voltada para a gestão de uma clínica veterinária. A aplicação está organizada em três módulos principais que representam os pilares do sistema:
+
+- 🐾 **Adoção**: Gerenciamento de animais disponíveis para adoção.
+- 🩺 **Clínica Veterinária**: Administração de pacientes, consultas e veterinários.
+- 🛍️ **Loja**: Controle de produtos e vendas.
+
+---
+
+## ⚙️ Funcionalidades
+
+### 🐾 Módulo de Adoção
+- Cadastro de animais disponíveis para adoção.
+- Listagem e consulta de animais cadastrados.
+- Registro do processo de adoção por interessados.
+- Acompanhamento do status das adoções.
+
+### 🩺 Módulo de Clínica Veterinária
+- Cadastro de pacientes (animais atendidos).
+- Agendamento e gerenciamento de consultas veterinárias.
+- Histórico médico de atendimentos e procedimentos.
+- Cadastro e gerenciamento de veterinários.
+
+### 🛍️ Módulo de Loja
+- Cadastro de produtos (ração, medicamentos, acessórios etc).
+- Controle de estoque com atualização automática.
+- Processamento de vendas de produtos da loja.
+
+---
+
+## 🧪 Tecnologias e Ferramentas
+
+- **Java 21**
+- **Spring Boot**
+- **Spring Data JPA**
+- **MySQL**
+- **Flyway (migração de banco de dados)**
+- **Swagger (documentação da API)**
+- **Lombok**
+- **JUnit & Mockito (testes automatizados)**
+- **Maven (gerenciador de dependências)**
+
+---
+
+## 📁 Estrutura do Projeto
+
+```
+VetCareAPI/
+│
+├── Adocao/               → Funcionalidades de adoção de pets
+├── Clinica_Veterina/     → Funcionalidades da clínica veterinária
+└── Store/                → Funcionalidades da loja (produtos e vendas)
+```
+
+Cada módulo segue boas práticas de arquitetura RESTful, com separação clara entre camadas: **Controller**, **Service**, **Repository**, **DTOs** e **Entities**.
+
+---
+
+## 🚀 Como Executar o Projeto
+
 ### Pré-requisitos
-- Java 17+
-- Node.js 16+
-- MySQL instalado
-### Backend
-1. Clone o repositório:
-   ```bash
-   git clone https://github.com/seu-usuario/vetcare.git
-   cd vetcare/backend
-Configure o banco de dados no arquivo application.properties.
-2. Execute o projeto:
-    ```bash
-    mvn spring-boot:run
-### Frontend
-1. Navegue para a pasta do frontend:
-    ```bash
-    cd vetcare/frontend
-2. Instale as dependências:
-    ```bash
-    npm install
-3. Inicie o aplicativo:
-    ```bash
-    npm start
-Contribuição
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
-Licença
-Este projeto está licenciado sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+- Java 21 instalado
+- MySQL em execução
+- Maven instalado
+
+### Passos:
+```bash
+# Clone o repositório
+git clone https://github.com/LeonardoChiarelli/-PROJETO-VetCare-/VetCareAPI.git
+
+# Acesse o diretório do projeto
+cd VetCareAPI
+
+# Configure o banco de dados no arquivo application.properties
+
+# Execute as migrações Flyway
+mvn flyway:migrate
+
+# Inicie o projeto
+mvn spring-boot:run
+```
+
+### Acessar a documentação da API:
+- `http://localhost:8080/swagger-ui.html`
+
+---
+
+## 🤝 Contribuições
+
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma **issue** ou enviar um **pull request** com sugestões, melhorias ou correções.
+
+---
+
+## 📄 Licença
+
+Este projeto está licenciado sob a **MIT License**. Consulte o arquivo `LICENSE` para mais detalhes.
