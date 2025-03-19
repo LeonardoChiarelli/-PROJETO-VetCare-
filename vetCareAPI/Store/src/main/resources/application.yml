@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: ${VETCARE_URL}
+    url: ${VETCARE_STORE_URL}
     username: ${MYSQL_USERNAME}
     password: ${MYSQL_PASSWORD}
   jpa:
