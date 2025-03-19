@@ -15,7 +15,7 @@ import java.util.Collection;
 import java.util.List;
 
 @Entity
-@Table
+@Table(name = "Usuarios")
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(of = "id")
@@ -50,12 +50,12 @@ public class Usuario implements UserDetails {
         return this.perfis.stream().anyMatch(Perfil::isComprador);
     }
 
-    public Boolean isVisualizador(){
-        return this.perfis.stream().anyMatch(Perfil::isVisualizador);
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        System.out.println("Perfis carregados para " + this.email + ": " + this.perfis);
+        if (this.perfis.isEmpty()) {
+            System.out.println("⚠️ Nenhum perfil foi carregado!");
+        }
         return this.perfis;
     }
 

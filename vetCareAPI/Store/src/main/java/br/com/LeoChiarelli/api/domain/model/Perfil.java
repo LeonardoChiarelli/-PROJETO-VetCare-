@@ -29,10 +29,6 @@ public class Perfil implements GrantedAuthority {
         return this.nome.equals("ROLE_COMPRADOR");
     }
 
-    public boolean isVisualizador(){
-        return this.nome.equals("ROLE_VISUALIZADOR");
-    }
-
     @Override
     public String getAuthority() {
         return nome;
