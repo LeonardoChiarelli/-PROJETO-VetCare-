@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
-@RequestMapping("/loja/admin")
+@RequestMapping("/loja/admin/pagamento")
 public class PagamentoController {
 
     @Autowired
@@ -35,7 +35,7 @@ public class PagamentoController {
         return ResponseEntity.ok(new DetalhesPagamentoDTO(service.aprovarPagamento(id)));
     }
 
-    @PatchMapping("/{id}/cancelar")
+    @DeleteMapping("/{id}/cancelar")
     @Transactional
     public ResponseEntity<PagamentoCanceladoDTO> cancelarPagamento(@PathVariable Long id){
         return ResponseEntity.status(400).body(new PagamentoCanceladoDTO(service.cancelarPagamento(id)));

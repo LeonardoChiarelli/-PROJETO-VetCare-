@@ -1,10 +1,13 @@
 package br.com.LeoChiarelli.api.domain.service;
 
 import br.com.LeoChiarelli.api.domain.dto.CadastrarMetodoDePagamentoDTO;
+import br.com.LeoChiarelli.api.domain.dto.ListaMetodoDePagamentosDTO;
 import br.com.LeoChiarelli.api.domain.model.MetodoDePagamento;
 import br.com.LeoChiarelli.api.domain.repository.IMetodoDePagamentoRepository;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -36,5 +39,15 @@ public class MetodoDePagamentoService {
     public void desativar(Long id) {
         var metodo = repository.getReferenceById(id);
         metodo.mudarEstado(false);
+    }
+
+    public void reativar(Long id) {
+        var metodo = repository.getReferenceById(id);
+        metodo.mudarEstado(true);
+    }
+
+    public Page<ListaMetodoDePagamentosDTO> listarMetodos(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(ListaMetodoDePagamentosDTO::new);
     }
 }
