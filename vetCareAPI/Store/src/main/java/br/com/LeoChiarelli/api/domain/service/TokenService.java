@@ -28,6 +28,7 @@ public class TokenService {
             return JWT.create()
                     .withIssuer(ISSUER)
                     .withSubject(usuario.getEmail())
+                    .withClaim("id", usuario.getId())
                     .withClaim("nome", usuario.getNome())
                     .withExpiresAt(dataExpiracao())
                     .sign(algoritmo);
@@ -46,6 +47,20 @@ public class TokenService {
                     .getSubject();
         } catch (JWTVerificationException e){
             throw new ValidacaoException("Token Inválido ou já expirado");
+        }
+    }
+
+    public Long getIdUsuarioDoToken(String tokenJWT){
+        try {
+            var algoritmo = Algorithm.HMAC256(secret);
+            var decodeJWT = JWT.require(algoritmo)
+                    .withIssuer(ISSUER)
+                    .build()
+                    .verify(tokenJWT);
+            System.out.println("DecodeJWT: " + decodeJWT.getClaim("id").asLong());
+            return decodeJWT.getClaim("id").asLong();
+        } catch (JWTVerificationException e){
+            throw new ValidacaoException("Token inválido ou já expirado");
         }
     }
 
