@@ -32,9 +32,10 @@ public class ItemPedido {
     private Integer quantidade;
     private BigDecimal precoUnitario;
 
-    public ItemPedido(Pedido pedido, Produto produto, @NotNull @Min(1) Integer quantidade) {
+    public ItemPedido(Pedido pedido, Produto produto, @NotNull @Min(1) Integer quantidade, BigDecimal preco) {
         this.pedido = pedido;
         this.produto = produto;
         this.quantidade = quantidade;
+        this.precoUnitario = preco;
     }
 }

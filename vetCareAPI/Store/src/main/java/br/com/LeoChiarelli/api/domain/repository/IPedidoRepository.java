@@ -29,6 +29,4 @@ public interface IPedidoRepository extends JpaRepository<Pedido, Long> {
             GROUP BY prod.categoria
             """)
     List<EstatisticasVendasDTO> faturamentoTotalPorCategoriaEDia(LocalDate dataOntem);
-
-    Optional<Pedido> findByDataPedidoAndUsuario_Id(LocalDateTime now, Long idUsuario);
 }

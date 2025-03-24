@@ -3,18 +3,14 @@ package br.com.LeoChiarelli.api.domain.service;
 import br.com.LeoChiarelli.api.domain.dto.CadastrarPedidoDTO;
 import br.com.LeoChiarelli.api.domain.model.ItemPedido;
 import br.com.LeoChiarelli.api.domain.model.Pedido;
-import br.com.LeoChiarelli.api.domain.repository.IEstoqueRepository;
-import br.com.LeoChiarelli.api.domain.repository.IPedidoRepository;
-import br.com.LeoChiarelli.api.domain.repository.IProdutoRepository;
-import br.com.LeoChiarelli.api.domain.repository.IUsuarioRepository;
+import br.com.LeoChiarelli.api.domain.repository.*;
 import br.com.LeoChiarelli.api.general.infra.exception.ValidacaoException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-import java.time.LocalDateTime;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 @Service
@@ -35,44 +31,64 @@ public class PedidoService {
     @Autowired
     private IUsuarioRepository usuarioRepository;
 
-    @PostConstruct
-    public void init(){
-        System.out.println("PedidoService carregado com sucesso!");
-    }
+    @Autowired
+    private IItemPedidoRepository itemPedidoRepository;
+
 
     public Pedido cadastrar(@Valid CadastrarPedidoDTO dto, HttpServletRequest request) {
         var idUsuario = tokenService.getIdUsuarioDoToken(identificarId(request));
-        System.out.println("Id usuário: " + idUsuario);
-        try {
-            var itens = new ArrayList<ItemPedido>();
-            for (var itemDTO : dto.itens()) {
+        BigDecimal valorTotal = BigDecimal.valueOf(0);
 
-                // DEBUG
-                if (itemDTO.idProduto() == null) { throw new ValidacaoException("ID do produto não pode ser nulo"); }
+        try {
+            var usuario = usuarioRepository.findById(idUsuario)
+                    .orElseThrow(() -> new ValidacaoException("Usuário não encontrado"));
+
+            // Cria e salva o pedido inicialmente sem itens
+            var pedido = new Pedido(new ArrayList<>(), usuario);
+            pedido = repository.save(pedido);
+
+            var itens = new ArrayList<ItemPedido>();
+
+            for (var itemDTO : dto.itens()) {
+                if (itemDTO.idProduto() == null) {
+                    throw new ValidacaoException("ID do produto não pode ser nulo");
+                }
 
                 var estoque = estoqueRepository.findByProduto_Id(itemDTO.idProduto());
+                if (estoque == null) {
+                    throw new ValidacaoException("Estoque não encontrado para o produto");
+                }
 
-                // DEBUG
-                if (estoque == null) { throw new ValidacaoException("Estoque não encontrado para o produto"); }
-
-                if (estoque.getQuantidade() >= itemDTO.quantidade()) {
-                    var produto = produtoRepository.findById(itemDTO.idProduto()).orElseThrow(() -> new ValidacaoException("Produto não encontrado"));
-
-                    if (!produto.isAtivo()) {
-                        throw new ValidacaoException("Produto não está ativo");
-                    }
-
-                    var pedido = repository.findByDataPedidoAndUsuario_Id(LocalDateTime.now(), idUsuario).orElseThrow(() -> new ValidacaoException("Pedido não econtrado"));
-                    var itemPedido = new ItemPedido(pedido, produto, itemDTO.quantidade());
-                    itens.add(itemPedido);
-                    estoque.diminuir(itemDTO.quantidade());
-                } else {
+                if (estoque.getQuantidade() < itemDTO.quantidade()) {
                     throw new ValidacaoException("Estoque indisponível para o produto");
                 }
+
+                var produto = produtoRepository.findById(itemDTO.idProduto())
+                        .orElseThrow(() -> new ValidacaoException("Produto não encontrado"));
+
+                if (!produto.isAtivo()) {
+                    throw new ValidacaoException("Produto não está ativo");
+                }
+
+                // Criar o item já com o pedido associado
+                var itemPedido = new ItemPedido(pedido, produto, itemDTO.quantidade(), produto.getPreco());
+                itens.add(itemPedido);
+
+                estoque.diminuir(itemDTO.quantidade());
+
+                valorTotal = valorTotal.add(itemPedido.getPrecoUnitario().multiply(BigDecimal.valueOf(itemPedido.getQuantidade())));
+
             }
 
-            var usuario = usuarioRepository.findById(idUsuario).orElseThrow(() -> new ValidacaoException("Usuário não encontrado"));
-            return repository.save(new Pedido(itens, usuario));
+            // Salva todos os itens de uma vez
+            itemPedidoRepository.saveAll(itens);
+
+
+            pedido.salvarItens(itens);
+            pedido.salvarValor(valorTotal);
+            repository.save(pedido);
+
+            return pedido;
         } catch (Exception e) {
             e.printStackTrace();
             throw e;

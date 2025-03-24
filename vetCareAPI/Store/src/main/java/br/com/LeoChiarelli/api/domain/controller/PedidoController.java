@@ -24,7 +24,6 @@ public class PedidoController {
     @PostMapping({"/admin/cadastrar", "/comprador/cadastrar"})
     @Transactional
     public ResponseEntity<?> cadastrar(@RequestBody @Valid CadastrarPedidoDTO dto, HttpServletRequest request){
-        System.out.println(">>> Entrou no método cadastrar()");
         try {
             return ResponseEntity.ok(new DetalhesPedidoDTO(service.cadastrar(dto, request)));
         } catch (Exception e){
