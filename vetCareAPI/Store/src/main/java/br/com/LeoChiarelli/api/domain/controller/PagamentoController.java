@@ -2,8 +2,7 @@ package br.com.LeoChiarelli.api.domain.controller;
 
 import br.com.LeoChiarelli.api.domain.dto.CadastrarPagamentoDTO;
 import br.com.LeoChiarelli.api.domain.dto.DetalhesPagamentoDTO;
-import br.com.LeoChiarelli.api.domain.dto.PagamentoCanceladoDTO;
-import br.com.LeoChiarelli.api.domain.dto.PagamentoNegadoDTO;
+import br.com.LeoChiarelli.api.domain.model.StatusPagamento;
 import br.com.LeoChiarelli.api.domain.service.PagamentoService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -32,18 +31,20 @@ public class PagamentoController {
     @PatchMapping("/{id}/aprovar")
     @Transactional
     public ResponseEntity<DetalhesPagamentoDTO> aprovarPagamento(@PathVariable Long id){
-        return ResponseEntity.ok(new DetalhesPagamentoDTO(service.aprovarPagamento(id)));
+        return ResponseEntity.ok(new DetalhesPagamentoDTO(service.mudarStatusPagamento(id, StatusPagamento.APROVADO)));
     }
 
     @DeleteMapping("/{id}/cancelar")
     @Transactional
-    public ResponseEntity<PagamentoCanceladoDTO> cancelarPagamento(@PathVariable Long id){
-        return ResponseEntity.status(400).body(new PagamentoCanceladoDTO(service.cancelarPagamento(id)));
+    public ResponseEntity<?> cancelarPagamento(@PathVariable Long id){
+        service.mudarStatusPagamento(id, StatusPagamento.CANCELADO);
+        return ResponseEntity.badRequest().body("Pagamento cancelado, entre em contato com o seu Banco");
     }
 
     @PatchMapping("/{id}/negar")
     @Transactional
-    public ResponseEntity<PagamentoNegadoDTO> negarPagamento(@PathVariable Long id){
-        return ResponseEntity.status(401).body(new PagamentoNegadoDTO(service.negarPagamento(id)));
+    public ResponseEntity<?> negarPagamento(@PathVariable Long id){
+        service.mudarStatusPagamento(id, StatusPagamento.NEGADO);
+        return ResponseEntity.badRequest().body("Pagamento negado, entre em contato com o seu Banco");
     }
 }

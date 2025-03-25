@@ -9,9 +9,6 @@ import java.math.BigDecimal;
 public record CadastrarPagamentoDTO(
         Long id,
 
-        @NotNull
-        BigDecimal valor,
-
         @NotBlank
         String titularCartao,
 

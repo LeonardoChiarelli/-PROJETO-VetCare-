@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table
+@Table(name = "pagamentos")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -41,8 +41,8 @@ public class Pagamento {
     @JoinColumn(name = "metodo_de_pagamento_id")
     private MetodoDePagamento metodoDePagamento;
 
-    public Pagamento(CadastrarPagamentoDTO dto, Pedido pedido, MetodoDePagamento metodo) {
-        this.valor = dto.valor();
+    public Pagamento(BigDecimal valor, CadastrarPagamentoDTO dto, Pedido pedido, MetodoDePagamento metodo) {
+        this.valor = valor;
         this.titularCartao = dto.titularCartao();
         this.numeroCartao = dto.numeroCartao();
         this.expiracaoCartao = dto.expiracaoCartao();

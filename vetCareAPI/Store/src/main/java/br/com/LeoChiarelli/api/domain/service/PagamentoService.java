@@ -29,24 +29,15 @@ public class PagamentoService {
 
         var pedido = pedidoRepository.findById(dto.idPedido()).orElseThrow(() -> new ValidacaoException("Pedido não encontrado"));
         var metodo = metodoRepository.findById(dto.idMetodo()).orElseThrow(() -> new ValidacaoException("Método de pagamento não encontrado"));
-        return new Pagamento(dto, pedido, metodo);
-    }
-
-    public Pagamento aprovarPagamento(Long id) {
-        return mudarStatusPagamento(id, StatusPagamento.APROVADO);
-    }
-
-    public Pagamento cancelarPagamento(Long id) {
-        return mudarStatusPagamento(id, StatusPagamento.CANCELADO);
-    }
-
-    public Pagamento negarPagamento(Long id) {
-        return mudarStatusPagamento(id, StatusPagamento.NEGADO);
+        var pagamento = new Pagamento(pedido.getValorTotal(), dto, pedido, metodo);
+        repository.save(pagamento);
+        return pagamento;
     }
 
     public Pagamento mudarStatusPagamento(Long id, StatusPagamento status){
         var pagamento = repository.findById(id).orElseThrow(() -> new ValidacaoException("Pagamento não encontrado"));
         pagamento.mudarStatus(status);
+        repository.save(pagamento);
         return pagamento;
     }
 }
